@@ -3,15 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Utilisateur;
 
 /**
- * Notification
+ * Application
  *
- * @ORM\Table(name="notification")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\NotificationRepository")
+ * @ORM\Table(name="application")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ApplicationRepository")
  */
-class Notification
+class Application
 {
     /**
      * @var int
@@ -25,31 +24,24 @@ class Notification
     /**
      * @var string
      *
-     * @ORM\Column(name="titre", type="string", length=200, unique=true)
+     * @ORM\Column(name="label", type="string", length=500, unique=true)
      */
-    private $titre;
+    private $label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=1000)
+     * @ORM\Column(name="description", type="string", length=1000, nullable=true)
      */
     private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="icone", type="string", length=500)
+     * @ORM\Column(name="url_directe", type="string", length=1000)
      */
-    private $icone;
+    private $urlDirecte;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_creation", type="datetime")
-     */
-    private $dateCreation;
-    
     /**
      * @var Utilisateur 
      *   
@@ -57,6 +49,7 @@ class Notification
      * @ORM\JoinColumn(name="createur_id", referencedColumnName="id")
      */
     private $createur;
+
 
     /**
      * Get id
@@ -69,27 +62,27 @@ class Notification
     }
 
     /**
-     * Set titre
+     * Set label
      *
-     * @param string $titre
+     * @param string $label
      *
-     * @return Notification
+     * @return Application
      */
-    public function setTitre($titre)
+    public function setLabel($label)
     {
-        $this->titre = $titre;
+        $this->label = $label;
 
         return $this;
     }
 
     /**
-     * Get titre
+     * Get label
      *
      * @return string
      */
-    public function getTitre()
+    public function getLabel()
     {
-        return $this->titre;
+        return $this->label;
     }
 
     /**
@@ -97,7 +90,7 @@ class Notification
      *
      * @param string $description
      *
-     * @return Notification
+     * @return Application
      */
     public function setDescription($description)
     {
@@ -117,59 +110,35 @@ class Notification
     }
 
     /**
-     * Set icone
+     * Set urlDirecte
      *
-     * @param string $icone
+     * @param string $urlDirecte
      *
-     * @return Notification
+     * @return Application
      */
-    public function setIcone($icone)
+    public function setUrlDirecte($urlDirecte)
     {
-        $this->icone = $icone;
+        $this->urlDirecte = $urlDirecte;
 
         return $this;
     }
 
     /**
-     * Get icone
+     * Get urlDirecte
      *
      * @return string
      */
-    public function getIcone()
+    public function getUrlDirecte()
     {
-        return $this->icone;
+        return $this->urlDirecte;
     }
 
-    /**
-     * Set dateCreation
-     *
-     * @param \DateTime $dateCreation
-     *
-     * @return Notification
-     */
-    public function setDateCreation($dateCreation)
-    {
-        $this->dateCreation = $dateCreation;
-
-        return $this;
-    }
-
-    /**
-     * Get dateCreation
-     *
-     * @return \DateTime
-     */
-    public function getDateCreation()
-    {
-        return $this->dateCreation;
-    }
-    
     /**
      * Set createur
      *
      * @param Utilisateur $createur
      *
-     * @return Notification
+     * @return Application
      */
     public function setCreateur($createur)
     {
@@ -188,3 +157,4 @@ class Notification
         return $this->createur;
     }
 }
+

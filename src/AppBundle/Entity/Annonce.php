@@ -51,7 +51,7 @@ class Annonce
     private $contenu;
 
     /**
-     * @var string 
+     * @var Utilisateur 
      *   
      * @ORM\ManyToOne(targetEntity="Utilisateur")
      * @ORM\JoinColumn(name="createur_id", referencedColumnName="id")
@@ -168,7 +168,7 @@ class Annonce
     /**
      * Set createur
      *
-     * @param string $createur
+     * @param Utilisateur $createur
      *
      * @return Annonce
      */
@@ -182,7 +182,7 @@ class Annonce
     /**
      * Get createur
      *
-     * @return string
+     * @return Utilisateur
      */
     public function getCreateur()
     {

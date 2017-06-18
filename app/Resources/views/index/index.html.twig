@@ -3,6 +3,11 @@
 {% block title %}AAAccueil{% endblock %}
 
 {% block body %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/" class="active">AAAccueil</a></li>
+        </ol>
+    </div>
 
     <div class="col-md-6">
         <div class="panel panel-default">
@@ -35,15 +40,43 @@
                 </div>
                 <div class="col-md-6">
                     <h2>Événements ÀAA venir</h2>
-                    <div>
+                    <div id="aaa-evenements-a-venir">
                         <h3>Aujourd'hui</h3>
-                        <p>Haaackathon #1 : création de l'AAAccueil </p>
-                        <p>Anniversaire de S18alg : Joyeux anniversaire ! </p>
+                        <p>Haaackathon #1 : création de l'AAAccueil <a href="" data-toggle="modal" data-target="#modal-hackathon-1"><span class="glyphicon glyphicon-info-sign"></span></a></p>
+                        <p>Anniversaire de S18alg : Joyeux anniversaire ! <a href="" data-toggle="modal" data-target="#modal-anniversaire"><span class="glyphicon glyphicon-info-sign"></span></a></p>
+                        <p>Hôpital psy Lucile : Aller voir pour dépression <a href="" data-toggle="modal" data-target="#modal-hp"><span class="glyphicon glyphicon-info-sign"></span></a></p>
+                        <h3>Lundi 19 juin</h3>
+                        <p>Téléphone Varren : Donner le numéro de fixe de la nouvelle maison à Lucile <a href="" data-toggle="modal" data-target="#modal-telephone"><span class="glyphicon glyphicon-info-sign"></span></a></p>
                         <h3>Mercredi 21 juin</h3>
-                        <p>Livraison Picard : Livraison des courses commandées vendredi </p>
+                        <p>Livraison Picard : Livraison des courses commandées vendredi <a href="" data-toggle="modal" data-target="#modal-courses"><span class="glyphicon glyphicon-info-sign"></span></a></p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    
+    <div id="aaa-evenements-modals">
+        <div class="modal fade" id="modal-hackathon-1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Haaackathon #1 : création de l'AAAccueil</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard.</p>
+                        <p>De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary">Éditer l'événement</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modal-anniversaire" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">Anniversaire de S18alg : Joyeux anniversaire ! </h4></div><div class="modal-body"><p>Une modal.</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button><button type="button" class="btn btn-primary">Éditer l'événement</button></div></div></div></div>
+        <div class="modal fade" id="modal-hp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">Hôpital psy Lucile : Aller voir pour dépression</h4></div><div class="modal-body"><p>Une modal.</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button><button type="button" class="btn btn-primary">Éditer l'événement</button></div></div></div></div>
+        <div class="modal fade" id="modal-telephone" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">Téléphone Varren : Donner le numéro de fixe de la nouvelle maison à Lucile</h4></div><div class="modal-body"><p>Une modal.</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button><button type="button" class="btn btn-primary">Éditer l'événement</button></div></div></div></div>
+        <div class="modal fade" id="modal-courses" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">Livraison Picard : Livraison des courses commandées vendredi</h4></div><div class="modal-body"><p>Une modal.</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button><button type="button" class="btn btn-primary">Éditer l'événement</button></div></div></div></div>
     </div>
 {% endblock %}

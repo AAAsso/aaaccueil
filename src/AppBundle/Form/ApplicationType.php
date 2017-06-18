@@ -13,7 +13,7 @@ class ApplicationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('label')->add('description')->add('urlDirecte')->add('createur');
+        $builder->add('slug')->add('label')->add('description')->add('urlDirecte')->add('estPublic')->add('createur');
     }
     
     /**

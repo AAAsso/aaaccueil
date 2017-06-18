@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Application
@@ -20,6 +21,12 @@ class Application
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @Gedmo\Slug(fields={"label"}, updatable=false)
+     * @ORM\Column(name="slug", type="string", length=550, unique=true)
+     */
+    protected $slug;
 
     /**
      * @var string
@@ -50,6 +57,12 @@ class Application
      */
     private $createur;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="est_public", type="boolean")
+     */
+    private $estPublic;
 
     /**
      * Get id
@@ -59,6 +72,30 @@ class Application
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Get slug
+     *
+     * @return string
+     */    
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Application
+     */  
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        
+        return $this;
     }
 
     /**
@@ -155,6 +192,30 @@ class Application
     public function getCreateur()
     {
         return $this->createur;
+    }
+    
+    /**
+     * Get estPublic
+     *
+     * @return boolean
+     */
+    public function getEstPublic()
+    {
+        return $this->estPublic;
+    }
+
+    /**
+     * Set estPublic
+     *
+     * @param boolean $estPublic
+     *
+     * @return Application
+     */
+    public function setEstPublic($estPublic)
+    {
+        $this->estPublic = $estPublic;
+        
+        return $this;
     }
 }
 

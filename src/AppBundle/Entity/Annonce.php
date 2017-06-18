@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Utilisateur;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Annonce
@@ -21,6 +22,12 @@ class Annonce
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @Gedmo\Slug(fields={"titre"}, updatable=false)
+     * @ORM\Column(name="slug", type="string", length=350, unique=true)
+     */
+    protected $slug;
 
     /**
      * @var string
@@ -57,7 +64,13 @@ class Annonce
      * @ORM\JoinColumn(name="createur_id", referencedColumnName="id")
      */
     private $createur;
-
+        
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="est_public", type="boolean")
+     */
+    private $estPublic;
 
     /**
      * Get id
@@ -67,6 +80,30 @@ class Annonce
     public function getId()
     {
         return $this->id;
+    }    
+        
+    /**
+     * Get slug
+     *
+     * @return string
+     */    
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Annonce
+     */  
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        
+        return $this;
     }
 
     /**
@@ -187,5 +224,29 @@ class Annonce
     public function getCreateur()
     {
         return $this->createur;
+    }
+    
+    /**
+     * Get estPublic
+     *
+     * @return boolean
+     */
+    public function getEstPublic()
+    {
+        return $this->estPublic;
+    }
+
+    /**
+     * Set estPublic
+     *
+     * @param boolean $estPublic
+     *
+     * @return Annonce
+     */
+    public function setEstPublic($estPublic)
+    {
+        $this->estPublic = $estPublic;
+        
+        return $this;
     }
 }

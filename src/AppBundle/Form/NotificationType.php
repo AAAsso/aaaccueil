@@ -13,7 +13,7 @@ class NotificationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('titre')->add('description')->add('icone')->add('dateCreation')->add('createur');
+        $builder->add('slug')->add('titre')->add('description')->add('icone')->add('dateCreation')->add('estPublic')->add('createur');
     }
     
     /**

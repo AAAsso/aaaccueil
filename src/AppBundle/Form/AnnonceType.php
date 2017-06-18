@@ -13,7 +13,7 @@ class AnnonceType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('titre')->add('dateCreation')->add('datePublication')->add('contenu')->add('createur');
+        $builder->add('slug')->add('titre')->add('dateCreation')->add('datePublication')->add('contenu')->add('estPublic')->add('createur');
     }
     
     /**

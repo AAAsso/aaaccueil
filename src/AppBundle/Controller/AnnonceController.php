@@ -2,29 +2,135 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Annonce;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Annonce controller.
+ *
+ * @Route("annonce")
+ */
 class AnnonceController extends Controller
 {
     /**
-     * @Route("/annonce/nouveau", name="annonce_nouveau")
+     * Lists all annonce entities.
+     *
+     * @Route("/liste", name="annonce_liste")
+     * @Method("GET")
      */
-    public function nouveauAction()
+    public function listeAction()
     {
-        return $this->render('AppBundle:Annonce:nouveau.html.twig', array(
-            // ...
+        $em = $this->getDoctrine()->getManager();
+
+        $annonces = $em->getRepository('AppBundle:Annonce')->findAll();
+
+        return $this->render('annonce/liste.html.twig', array(
+            'annonces' => $annonces,
         ));
     }
 
     /**
-     * @Route("/annonces", name="annonce_liste")
+     * Creates a new annonce entity.
+     *
+     * @Route("/nouveau", name="annonce_nouveau")
+     * @Method({"GET", "POST"})
      */
-    public function listeAction()
+    public function nouveauAction(Request $request)
     {
-        return $this->render('AppBundle:Annonce:liste.html.twig', array(
-            // ...
+        $annonce = new Annonce();
+        $form = $this->createForm('AppBundle\Form\AnnonceType', $annonce);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($annonce);
+            $em->flush();
+
+            return $this->redirectToRoute('annonce_detail', array('slug' => $annonce->getSlug()));
+        }
+
+        return $this->render('annonce/nouveau.html.twig', array(
+            'annonce' => $annonce,
+            'form' => $form->createView(),
         ));
     }
 
+    /**
+     * Finds and displays a annonce entity.
+     *
+     * @Route("/{slug}", name="annonce_detail")
+     * @Method("GET")
+     */
+    public function detailAction(Annonce $annonce)
+    {
+        $deleteForm = $this->createDeleteForm($annonce);
+
+        return $this->render('annonce/detail.html.twig', array(
+            'annonce' => $annonce,
+            'form_supprimer' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing annonce entity.
+     *
+     * @Route("/editer/{slug}", name="annonce_editer")
+     * @Method({"GET", "POST"})
+     */
+    public function editerAction(Request $request, Annonce $annonce)
+    {
+        $deleteForm = $this->createDeleteForm($annonce);
+        $editForm = $this->createForm('AppBundle\Form\AnnonceType', $annonce);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('annonce_editer', array('slug' => $annonce->getSlug()));
+        }
+
+        return $this->render('annonce/editer.html.twig', array(
+            'annonce' => $annonce,
+            'form_editier' => $editForm->createView(),
+            'form_supprimer' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Deletes a annonce entity.
+     *
+     * @Route("/supprimer/{id}", name="annonce_supprimer")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, Annonce $annonce)
+    {
+        $form = $this->createDeleteForm($annonce);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($annonce);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('annonce_liste');
+    }
+
+    /**
+     * Creates a form to delete a annonce entity.
+     *
+     * @param Annonce $annonce The annonce entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Annonce $annonce)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('annonce_supprimer', array('id' => $annonce->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
+    }
 }

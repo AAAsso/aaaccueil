@@ -23,7 +23,7 @@
                 <td>{{ notification.slug }}</td>
                 <td>{{ notification.titre }}</td>
                 <td>{{ notification.description }}</td>
-                <td>{{ notification.icone }}</td>
+                <td><span class="glyphicon {{ notification.icone }}" aria-hidden="true"></span></td>
                 <td>{% if notification.dateCreation %}{{ notification.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if notification.estPublic %}Yes{% else %}No{% endif %}</td>
                 <td>

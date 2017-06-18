@@ -39,9 +39,17 @@ class ApplicationController extends Controller
      */
     public function nouveauAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        
         $application = new Application();
         $form = $this->createForm('AppBundle\Form\ApplicationType', $application);
         $form->handleRequest($request);
+        
+        $application->setDateCreation(new \DateTime());
+        // TODO:
+        // Remplacer l'id 2 par l'id de l'utilisateur connecté
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);        
+        $application->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -63,7 +71,7 @@ class ApplicationController extends Controller
      * @Route("/{slug}", name="application_detail")
      * @Method("GET")
      */
-    public function voirAction(Application $application)
+    public function detailAction(Application $application)
     {
         $deleteForm = $this->createDeleteForm($application);
 
@@ -88,7 +96,7 @@ class ApplicationController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('application_editer', array('slug' => $application->getSlug()));
+            return $this->redirectToRoute('application_detail', array('slug' => $application->getSlug()));
         }
 
         return $this->render('application/editer.html.twig', array(
@@ -104,7 +112,7 @@ class ApplicationController extends Controller
      * @Route("/supprimer/{id}", name="application_supprimer")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Application $application)
+    public function supprimerAction(Request $request, Application $application)
     {
         $form = $this->createDeleteForm($application);
         $form->handleRequest($request);

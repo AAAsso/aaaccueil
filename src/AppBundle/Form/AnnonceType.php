@@ -5,6 +5,9 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class AnnonceType extends AbstractType
 {
@@ -13,7 +16,11 @@ class AnnonceType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('slug')->add('titre')->add('dateCreation')->add('datePublication')->add('contenu')->add('estPublic')->add('createur');
+        $builder
+            ->add('titre', TextType::class, array('label' => 'Titre'))
+            ->add('datePublication', DateTimeType::class, array('label' => 'Date de publication'))
+            ->add('contenu', TextareaType::class, array('label' => 'Contenu'))
+            ->add('estPublic', null, array('label' => 'Est publique ?'));
     }
     
     /**

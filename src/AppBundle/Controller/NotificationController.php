@@ -37,11 +37,19 @@ class NotificationController extends Controller
      * @Route("/nouveau", name="notification_nouveau")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function nouveauAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+    
         $notification = new Notification();
         $form = $this->createForm('AppBundle\Form\NotificationType', $notification);
         $form->handleRequest($request);
+        
+        $notification->setDateCreation(new \DateTime());
+        // TODO:
+        // Remplacer l'id 2 par l'id de l'utilisateur connecté
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);        
+        $notification->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -74,12 +82,12 @@ class NotificationController extends Controller
     }
 
     /**
-     * Displays a form to editerer an existing notification entity.
+     * Displays a form to edit an existing notification entity.
      *
      * @Route("/editer/{slug}", name="notification_editer")
      * @Method({"GET", "POST"})
      */
-    public function editererAction(Request $request, Notification $notification)
+    public function editerAction(Request $request, Notification $notification)
     {
         $deleteForm = $this->createDeleteForm($notification);
         $editererForm = $this->createForm('AppBundle\Form\NotificationType', $notification);
@@ -88,10 +96,10 @@ class NotificationController extends Controller
         if ($editererForm->isSubmitted() && $editererForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('notification_editerer', array('slug' => $notification->getSlug()));
+            return $this->redirectToRoute('notification_detail', array('slug' => $notification->getSlug()));
         }
 
-        return $this->render('notification/editerer.html.twig', array(
+        return $this->render('notification/editer.html.twig', array(
             'notification' => $notification,
             'form_editer' => $editererForm->createView(),
             'form_supprimer' => $deleteForm->createView(),
@@ -104,7 +112,7 @@ class NotificationController extends Controller
      * @Route("/supprimer/{id}", name="notification_supprimer")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Notification $notification)
+    public function supprimerAction(Request $request, Notification $notification)
     {
         $form = $this->createDeleteForm($notification);
         $form->handleRequest($request);
@@ -128,7 +136,7 @@ class NotificationController extends Controller
     private function createDeleteForm(Notification $notification)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('notification_delete', array('id' => $notification->getId())))
+            ->setAction($this->generateUrl('notification_supprimer', array('id' => $notification->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;

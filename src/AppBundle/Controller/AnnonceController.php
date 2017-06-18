@@ -39,9 +39,17 @@ class AnnonceController extends Controller
      */
     public function nouveauAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        
         $annonce = new Annonce();
         $form = $this->createForm('AppBundle\Form\AnnonceType', $annonce);
         $form->handleRequest($request);
+        
+        $annonce->setDateCreation(new \DateTime());
+        // TODO:
+        // Remplacer l'id 2 par l'id de l'utilisateur connecté
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);        
+        $annonce->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -88,12 +96,12 @@ class AnnonceController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('annonce_editer', array('slug' => $annonce->getSlug()));
+            return $this->redirectToRoute('annonce_detail', array('slug' => $annonce->getSlug()));
         }
 
         return $this->render('annonce/editer.html.twig', array(
             'annonce' => $annonce,
-            'form_editier' => $editForm->createView(),
+            'form_editer' => $editForm->createView(),
             'form_supprimer' => $deleteForm->createView(),
         ));
     }

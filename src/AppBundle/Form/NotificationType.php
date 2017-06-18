@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class NotificationType extends AbstractType
 {
@@ -13,7 +15,11 @@ class NotificationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('slug')->add('titre')->add('description')->add('icone')->add('dateCreation')->add('estPublic')->add('createur');
+        $builder
+            ->add('titre', TextType::class, array('label' => 'Titre'))
+            ->add('description', TextareaType::class, array('label' => 'Description'))
+            ->add('icone', TextType::class, array('label' => 'Icône'))
+            ->add('estPublic', null, array('label' => 'Est publique ?'));
     }
     
     /**

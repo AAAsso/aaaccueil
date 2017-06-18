@@ -48,6 +48,13 @@ class Application
      * @ORM\Column(name="url_directe", type="string", length=1000)
      */
     private $urlDirecte;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_creation", type="datetime")
+     */
+    private $dateCreation;
 
     /**
      * @var Utilisateur 
@@ -169,6 +176,31 @@ class Application
     {
         return $this->urlDirecte;
     }
+    
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Application
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
+
 
     /**
      * Set createur
@@ -192,7 +224,7 @@ class Application
     public function getCreateur()
     {
         return $this->createur;
-    }
+    }    
     
     /**
      * Get estPublic

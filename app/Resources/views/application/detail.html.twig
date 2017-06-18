@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Application</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ application.id }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ application.slug }}</td>
+            </tr>
+            <tr>
+                <th>Label</th>
+                <td>{{ application.label }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ application.description }}</td>
+            </tr>
+            <tr>
+                <th>Urldirecte</th>
+                <td>{{ application.urlDirecte }}</td>
+            </tr>
+            <tr>
+                <th>Estpublic</th>
+                <td>{% if application.estPublic %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('application_liste') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('application_editer', { 'slug': application.slug }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(form_supprimer) }}
+                <input type="submit" value="Delete">
+            {{ form_end(form_supprimer) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Annonce</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ annonce.id }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ annonce.slug }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ annonce.titre }}</td>
+            </tr>
+            <tr>
+                <th>Datecreation</th>
+                <td>{% if annonce.dateCreation %}{{ annonce.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Datepublication</th>
+                <td>{% if annonce.datePublication %}{{ annonce.datePublication|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ annonce.contenu }}</td>
+            </tr>
+            <tr>
+                <th>EstPublic</th>
+                <td>{% if annonce.estPublic %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('annonce_liste') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('annonce_editer', { 'slug': annonce.slug }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(form_supprimer) }}
+                <input type="submit" value="Delete">
+            {{ form_end(form_supprimer) }}
+        </li>
+    </ul>
+{% endblock %}

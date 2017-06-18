@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Notification</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ notification.id }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ notification.slug }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ notification.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ notification.description }}</td>
+            </tr>
+            <tr>
+                <th>Icone</th>
+                <td>{{ notification.icone }}</td>
+            </tr>
+            <tr>
+                <th>Datecreation</th>
+                <td>{% if notification.dateCreation %}{{ notification.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Estpublic</th>
+                <td>{% if notification.estPublic %}Yes{% else %}No{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('notification_liste') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('notification_editer', { 'slug': notification.slug }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(form_supprimer) }}
+                <input type="submit" value="Delete">
+            {{ form_end(form_supprimer) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Notification edit</h1>
+
+    {{ form_start(form_editer) }}
+        {{ form_widget(form_editer) }}
+        <input type="submit" value="Edit" />
+    {{ form_end(form_editer) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('notification_liste') }}">Back to the list</a>
+        </li>
+        <li>
+            {{ form_start(form_supprimer) }}
+                <input type="submit" value="Delete">
+            {{ form_end(form_supprimer) }}
+        </li>
+    </ul>
+{% endblock %}

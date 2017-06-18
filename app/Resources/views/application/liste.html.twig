@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Applications list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Slug</th>
+                <th>Label</th>
+                <th>Description</th>
+                <th>Urldirecte</th>
+                <th>Estpublic</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for application in applications %}
+            <tr>
+                <td><a href="{{ path('application_detail', { 'slug': application.slug }) }}">{{ application.id }}</a></td>
+                <td>{{ application.slug }}</td>
+                <td>{{ application.label }}</td>
+                <td>{{ application.description }}</td>
+                <td>{{ application.urlDirecte }}</td>
+                <td>{% if application.estPublic %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('application_detail', { 'slug': application.slug }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('application_editer', { 'slug': application.slug }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('application_nouveau') }}">Create a new application</a>
+        </li>
+    </ul>
+{% endblock %}

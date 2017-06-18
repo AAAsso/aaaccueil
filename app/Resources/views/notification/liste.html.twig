@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Notifications list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Slug</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Icone</th>
+                <th>Datecreation</th>
+                <th>Estpublic</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for notification in notifications %}
+            <tr>
+                <td><a href="{{ path('notification_detail', { 'slug': notification.slug }) }}">{{ notification.id }}</a></td>
+                <td>{{ notification.slug }}</td>
+                <td>{{ notification.titre }}</td>
+                <td>{{ notification.description }}</td>
+                <td>{{ notification.icone }}</td>
+                <td>{% if notification.dateCreation %}{{ notification.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if notification.estPublic %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('notification_detail', { 'slug': notification.slug }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('notification_editer', { 'slug': notification.slug }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('notification_nouveau') }}">Create a new notification</a>
+        </li>
+    </ul>
+{% endblock %}

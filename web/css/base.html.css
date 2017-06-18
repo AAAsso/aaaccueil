@@ -1,14 +1,14 @@
 body { padding-top: 70px; padding-bottom: 70px; }
 @media (min-width: 768px) {
-    #sfx-navbar-bottom {
+    #aaa-navbar-bottom {
         text-align: center;
     }
-    #sfx-navbar-bottom .navbar-nav {
+    #aaa-navbar-bottom .navbar-nav {
         display: inline-block;
         float: none;
         vertical-align: top;
     }
-    #sfx-navbar-bottom .navbar-nav a {
+    #aaa-navbar-bottom .navbar-nav a {
         padding-left: 30px;
         padding-right: 30px;
     }

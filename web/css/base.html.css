@@ -1,0 +1,15 @@
+body { padding-top: 50px; padding-bottom: 50px; }
+@media (min-width: 768px) {
+    #sfx-navbar-bottom {
+        text-align: center;
+    }
+    #sfx-navbar-bottom .navbar-nav {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+    }
+    #sfx-navbar-bottom .navbar-nav a {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}

@@ -2,12 +2,104 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+        <title>{% block title %}Aaaccueil{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <!-- ------------------------------- -->
+    <!-- ------------ jQuery ----------- -->
+    <!-- ------------------------------- -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <!-- ------------------------------- -->
+    <!-- ---------- Bootstrap ---------- -->
+    <!-- ------------------------------- -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- ------------------------------- -->
+    <!-- ------- Propre au site -------- -->
+    <!-- ------------------------------- -->
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+</head>
+<body>    
+	<div class="gray col-md-3 hidden-sm hidden-xs"></div>
+	<div class="container col-md-offset-3 col-md-6" id="content" tabindex="-1">
+	    <nav class="navbar navbar-default navbar-fixed-top col-md-12">
+	        <div class="container-fluid">
+	            <!-- Brand and toggle get grouped for better mobile display -->
+	            <div class="navbar-header">
+	                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>
+	                <a class="navbar-brand" href={{ path('aaaccueil') }}>AAAccueil</a>
+	            </div>
+
+	            <!-- Collect the nav links, forms, and other content for toggling -->
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <ul class="nav navbar-nav">
+	                    <li class="dropdown">
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAnonces <span class="caret"></span></a>
+	                        <ul class="dropdown-menu">
+	                            <li><p class="navbar-btn text-center">
+                                    <a href={{ path('annonce_nouveau') }} class="btn btn-default">Créer</a>
+                                </p></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href={{ path('annonce_liste') }}>Voir toutes</a></li>
+	                        </ul>
+	                    </li>
+	                    <li class="dropdown">
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAplications <span class="caret"></span></a>
+	                        <ul class="dropdown-menu">
+	                            <!-- Replacer par addresse contenue dans l'objet Application-->
+	                            <li><a href="#">Mattermost</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="#">Teamspeak</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="#">Minecraft</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="#">Don't Starve</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><p class="navbar-btn text-center">
+                                    <a href={{ path('application_nouveau') }} class="btn btn-default">Ajouter une entrée</a>
+                                </p></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href={{ path('application_liste') }}>Voir toutes</a></li>
+	                        </ul> 
+	                    </li>
+	                    <li class="dropdown">
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projets <span class="caret"></span></a>
+	                        <ul class="dropdown-menu">
+	                            <li><a href="#">T</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="#">O</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="#">D</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="#">O</a></li>
+	                        </ul>
+	                    </li>
+	                    <li class="dropdown">
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Monitoring <span class="caret"></span></a>
+	                        <ul class="dropdown-menu">
+	                            <li><a href="#">T</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="#">O</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="#">D</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="#">O</a></li>
+	                        </ul>
+	                    </li>	                    
+	                </ul>                
+	            </div><!-- /.navbar-collapse -->
+	        </div><!-- /.container-fluid -->
+	    </nav>	      
+		{% block body %}{% endblock %}	   
+    </div>	
+    {% block javascripts %}{% endblock %}
+</body>
 </html>

@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class AnnonceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findPublicatedOnes()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM AppBundle:Annonce a '
+                . 'WHERE a.datePublication <= CURRENT_TIMESTAMP()'
+                . 'ORDER BY a.datePublication DESC'
+            )
+            ->setMaxResults(10)->getResult();
+    }
 }

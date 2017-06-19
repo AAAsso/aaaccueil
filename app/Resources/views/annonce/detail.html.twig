@@ -1,52 +1,44 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ annonce.titre }}{% endblock %}
+
 {% block body %}
-    <h1>Annonce</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li><a href="{{ path('annonce_liste') }}">Annonces</a></li>
+            <li class="active">{{ annonce.titre }}</li>
+        </ol>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ annonce.id }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ annonce.slug }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ annonce.titre }}</td>
-            </tr>
-            <tr>
-                <th>Datecreation</th>
-                <td>{% if annonce.dateCreation %}{{ annonce.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Datepublication</th>
-                <td>{% if annonce.datePublication %}{{ annonce.datePublication|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Contenu</th>
-                <td>{{ annonce.contenu }}</td>
-            </tr>
-            <tr>
-                <th>EstPublic</th>
-                <td>{% if annonce.estPublic %}Yes{% else %}No{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+        <h1>Annonce</h1>
 
-    <ul>
-        <li>
-            <a href="{{ path('annonce_liste') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('annonce_editer', { 'slug': annonce.slug }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(form_supprimer) }}
-                <input type="submit" value="Delete">
-            {{ form_end(form_supprimer) }}
-        </li>
-    </ul>
+        <dl class="dl-horizontal">
+            <dt>ID</dt>
+            <dd>{{ annonce.id }}</dd>
+            <dt>Slug</dt>
+            <dd>{{ annonce.slug }}</dd>
+            <dt>A été créé le</dt>
+            <dd>{% if annonce.dateCreation %}{{ annonce.dateCreation|date('d F Y à H:i') }}{% endif %}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Titre</dt>
+            <dd>{{ annonce.titre }}</dd>
+            <dt>Sera publiée le</dt>
+            <dd>{% if annonce.datePublication %}{{ annonce.datePublication|date('d F Y à H:i') }}{% endif %}</dd>
+            <dt>Contenu</dt>
+            <dd>{{ annonce.contenu }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Visibilité</dt>
+            <dd>{% if annonce.estPublic %}Publique{% else %}Privée{% endif %}</dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        {{ form_start(form_supprimer) }}
+            <button class="btn btn-danger" type="submit" ><span class="glyphicon glyphicon-trash"></span> Supprimer l'annonce</button>
+        {{ form_end(form_supprimer) }}
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('annonce_editer', { 'slug': annonce.slug }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Éditer l'annonce</a>
+    </div>
 {% endblock %}

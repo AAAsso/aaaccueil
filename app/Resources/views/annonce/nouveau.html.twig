@@ -1,16 +1,25 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Nouvelle annonce{% endblock %}
+
 {% block body %}
-    <h1>Annonce creation</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li><a href="{{ path('annonce_liste') }}">Annonces</a></li>
+            <li class="active">Publier une nouvelle annonce</li>
+        </ol>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('annonce_liste') }}">Back to the list</a>
-        </li>
-    </ul>
+        <h1>Publier une nouvelle annonce</h1>
+    </div>
+    <div class="col-md-12">
+        {{ form_start(form, {'attr': {'id': 'form_publier_annonce'}}) }}
+            {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('annonce_liste') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Annuler la publication</a>
+        <button class="btn btn-primary" form="form_publier_annonce"><span class="glyphicon glyphicon-ok"></span> Publier l'annonce</button>
+    </div>
 {% endblock %}

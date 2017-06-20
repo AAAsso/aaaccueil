@@ -1,0 +1,57 @@
+.table.aaa-table {
+    table-layout: fixed;
+}
+
+.table.aaa-table > tbody > tr > td,
+.table.aaa-table > tbody > tr > th,
+.table.aaa-table > tfoot > tr > td,
+.table.aaa-table > tfoot > tr > th,
+.table.aaa-table > thead > tr > td,
+.table.aaa-table > thead > tr > th {
+    height: 40px;
+    vertical-align: middle;
+}
+
+.table.aaa-table > tbody > tr > td.ellipsis,
+.table.aaa-table > tbody > tr > th.ellipsis,
+.table.aaa-table > tfoot > tr > td.ellipsis,
+.table.aaa-table > tfoot > tr > th.ellipsis,
+.table.aaa-table > thead > tr > td.ellipsis,
+.table.aaa-table > thead > tr > th.ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-id,
+.table.aaa-table > tbody > tr > th.aaa-id,
+.table.aaa-table > tfoot > tr > td.aaa-id,
+.table.aaa-table > tfoot > tr > th.aaa-id,
+.table.aaa-table > thead > tr > td.aaa-id,
+.table.aaa-table > thead > tr > th.aaa-id {
+    width: 40px;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-action,
+.table.aaa-table > tbody > tr > th.aaa-action,
+.table.aaa-table > tfoot > tr > td.aaa-action,
+.table.aaa-table > tfoot > tr > th.aaa-action,
+.table.aaa-table > thead > tr > td.aaa-action,
+.table.aaa-table > thead > tr > th.aaa-action {
+    width: 50px;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-date,
+.table.aaa-table > tbody > tr > th.aaa-date,
+.table.aaa-table > tfoot > tr > td.aaa-date,
+.table.aaa-table > tfoot > tr > th.aaa-date,
+.table.aaa-table > thead > tr > td.aaa-date,
+.table.aaa-table > thead > tr > th.aaa-date {
+    text-align: center;
+}
+
+.table.aaa-table > tbody > tr.aaa-row-clickable,
+.table.aaa-table > tfoot > tr.aaa-row-clickable,
+.table.aaa-table > thead > tr.aaa-row-clickable {
+    cursor: pointer; cursor: hand;
+}

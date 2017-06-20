@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <title>AAAccueil - {% block title %}{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('images/faaavicon.png') }}" />
 
         <!-- ------------------------------- -->
@@ -20,6 +19,8 @@
         <!-- ------- Propre au site -------- -->
         <!-- ------------------------------- -->
         <link rel="stylesheet" href="{{ asset('css/base.html.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/global/taaable.css') }}" />
+        {% block stylesheets %}{% endblock %}
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">

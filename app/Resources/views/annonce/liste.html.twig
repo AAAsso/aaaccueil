@@ -22,32 +22,35 @@
                 <tr>
                     <th class="aaa-id">ID</th>
                     <th style="width: 8%">Slug</th>
-                    <th style="width: 22%">Titre</th>
+                    <th style="width: 20%">Titre</th>
+                    <th style="width: 10%">Auteur</th>
                     <th style="width: 10%" class="aaa-date">Création</th>
                     <th style="width: 10%" class="aaa-date">Publication</th>
-                    <th style="width: 40%">Contenu</th>
-                    <th style="width: 10%">Visibilité</th>
+                    <th style="width: 34%">Contenu</th>
+                    <th style="width: 8%" class="aaa-icon">Visibilité</th>
                     <th class="aaa-action"></th>
                     <th class="aaa-action"></th>
                 </tr>
             </thead>
             <tbody>
             {% for annonce in annonces %}
-                {% set form_supprimer = forms_supprimer[annonce.id] %}
-                <tr class="aaa-row-clickable" onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';">
-                    <td><a href="{{ path('annonce_detail', { 'slug': annonce.slug }) }}">{{ annonce.id }}</a></td>
-                    <td class=" ellipsis" title="{{ annonce.slug }}">{{ annonce.slug }}</td>
-                    <td class=" ellipsis" title="{{ annonce.titre }}">{{ annonce.titre }}</td>
-                    <td class="aaa-date">{% if annonce.dateCreation %}{{ annonce.dateCreation|date('d M Y') }}<br />{{ annonce.dateCreation|date('H:i') }}{% endif %}</td>
-                    <td class="aaa-date">{% if annonce.datePublication %}{{ annonce.datePublication|date('d M Y') }}<br />{{ annonce.datePublication|date('H:i') }}{% endif %}</td>
-                    <td class=" ellipsis" title="{{ annonce.contenu }}">{{ annonce.contenu }}</td>
-                    <td>{% if annonce.estPublic %}Publique{% else %}Privée{% endif %}</td>
-                    <td><a href="{{ path('annonce_editer', { 'slug': annonce.slug }) }}" class="btn btn-default" title="Éditer l'annonce"><span class="glyphicon glyphicon-edit"></span></a></td>
-                    <td>
-                        {{ form_start(form_supprimer) }}
-                        <button class="btn btn-danger" type="submit" title="Supprimer l'annonce"><span class="glyphicon glyphicon-trash"></span></button>
-                        {{ form_end(form_supprimer) }}
+                <tr class="aaa-row-clickable">
+                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';">{{ annonce.id }}</td>
+                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="ellipsis" title="{{ annonce.slug }}">{{ annonce.slug }}</td>
+                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="ellipsis" title="{{ annonce.titre }}">{{ annonce.titre }}</td>
+                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';">{{ annonce.createur.pseudo }}</td>
+                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="aaa-date">{% if annonce.dateCreation %}{{ annonce.dateCreation|date('d M Y') }}<br />{{ annonce.dateCreation|date('H:i') }}{% endif %}</td>
+                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="aaa-date">{% if annonce.datePublication %}{{ annonce.datePublication|date('d M Y') }}<br />{{ annonce.datePublication|date('H:i') }}{% endif %}</td>
+                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="ellipsis" title="{{ annonce.contenu }}">{{ annonce.contenu }}</td>
+                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="aaa-icon">
+                        {% if annonce.estPublic %}
+                            <span class="glyphicon glyphicon-user" title="Publique"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-lock" title="Privée"></span>
+                        {% endif %}
                     </td>
+                    <td><a href="{{ path('annonce_editer', { 'slug': annonce.slug }) }}" class="btn btn-default" title="Éditer l'annonce"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ annonce.slug }}" title="Supprimer l'annonce"><span class="glyphicon glyphicon-trash"></span></button></td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -56,5 +59,35 @@
     <div class="col-md-6"></div>
     <div class="col-md-6 text-right">
         <a href="{{ path('annonce_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Publier une nouvelle annonce</a>
+    </div>
+    <div id="modals-confirmation-suppression">
+        {% for annonce in annonces %}
+            {% set form_supprimer = forms_supprimer[annonce.id] %}
+            <div id="modal-{{ annonce.slug }}" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Voulez-vous supprimer l'annonce {{ annonce.titre }} ?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer text-left">
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    {{ form_start(form_supprimer) }}
+                                        <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                                    {{ form_end(form_supprimer) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        {% endfor %}
     </div>
 {% endblock %}

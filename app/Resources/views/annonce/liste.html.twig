@@ -1,49 +1,57 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Annonces{% endblock %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('css/annonce/liste.html.css') }}" />{% endblock %}
+
 {% block body %}
-    <h1>Annonces list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Slug</th>
-                <th>Titre</th>
-                <th>Datecreation</th>
-                <th>Datepublication</th>
-                <th>Contenu</th>
-                <th>EstPublic</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for annonce in annonces %}
-            <tr>
-                <td><a href="{{ path('annonce_detail', { 'slug': annonce.slug }) }}">{{ annonce.id }}</a></td>
-                <td>{{ annonce.slug }}</td>
-                <td>{{ annonce.titre }}</td>
-                <td>{% if annonce.dateCreation %}{{ annonce.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if annonce.datePublication %}{{ annonce.datePublication|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ annonce.contenu }}</td>
-                <td>{% if annonce.estPublic %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('annonce_detail', { 'slug': annonce.slug }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('annonce_editer', { 'slug': annonce.slug }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('annonce_nouveau') }}">Create a new annonce</a>
-        </li>
-    </ul>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li class="active">Annonces</li>
+        </ol>
+        <h1>Annonces</h1>
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('annonce_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Publier une nouvelle annonce</a>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-hover aaa-table">
+            <thead>
+                <tr>
+                    <th class="aaa-id">ID</th>
+                    <th style="width: 8%">Slug</th>
+                    <th style="width: 22%">Titre</th>
+                    <th style="width: 10%" class="aaa-date">Création</th>
+                    <th style="width: 10%" class="aaa-date">Publication</th>
+                    <th style="width: 40%">Contenu</th>
+                    <th style="width: 10%">Visibilité</th>
+                    <th class="aaa-action"></th>
+                    <th class="aaa-action"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for annonce in annonces %}
+                <tr class="aaa-row-clickable" onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';">
+                    <td><a href="{{ path('annonce_detail', { 'slug': annonce.slug }) }}">{{ annonce.id }}</a></td>
+                    <td class=" ellipsis" title="{{ annonce.slug }}">{{ annonce.slug }}</td>
+                    <td class=" ellipsis" title="{{ annonce.titre }}">{{ annonce.titre }}</td>
+                    <td class="aaa-date">{% if annonce.dateCreation %}{{ annonce.dateCreation|date('d M Y') }}<br />{{ annonce.dateCreation|date('H:i') }}{% endif %}</td>
+                    <td class="aaa-date">{% if annonce.datePublication %}{{ annonce.datePublication|date('d M Y') }}<br />{{ annonce.datePublication|date('H:i') }}{% endif %}</td>
+                    <td class=" ellipsis" title="{{ annonce.contenu }}">{{ annonce.contenu }}</td>
+                    <td>{% if annonce.estPublic %}Publique{% else %}Privée{% endif %}</td>
+                    <td><a href="{{ path('annonce_editer', { 'slug': annonce.slug }) }}" class="btn btn-default" title="Éditer l'annonce"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td>
+                        <button class="btn btn-danger" type="submit" title="Supprimer l'annonce"><span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('annonce_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Publier une nouvelle annonce</a>
+    </div>
 {% endblock %}

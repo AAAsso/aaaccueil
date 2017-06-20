@@ -23,11 +23,19 @@ class AnnonceController extends Controller
     public function listeAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $annonces = $em->getRepository('AppBundle:Annonce')->findAll();
+        
+        $deleteForms = array();
+        
+        foreach($annonces as $annonce)
+        {
+            $deleteForm = $this->createDeleteForm($annonce);
+            $deleteForms[$annonce->getId()] = $deleteForm->createView();
+        }        
 
         return $this->render('annonce/liste.html.twig', array(
             'annonces' => $annonces,
+            'forms_supprimer' => $deleteForms, 
         ));
     }
 

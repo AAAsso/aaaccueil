@@ -33,6 +33,7 @@
             </thead>
             <tbody>
             {% for annonce in annonces %}
+                {% set form_supprimer = forms_supprimer[annonce.id] %}
                 <tr class="aaa-row-clickable" onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';">
                     <td><a href="{{ path('annonce_detail', { 'slug': annonce.slug }) }}">{{ annonce.id }}</a></td>
                     <td class=" ellipsis" title="{{ annonce.slug }}">{{ annonce.slug }}</td>
@@ -43,7 +44,9 @@
                     <td>{% if annonce.estPublic %}Publique{% else %}Privée{% endif %}</td>
                     <td><a href="{{ path('annonce_editer', { 'slug': annonce.slug }) }}" class="btn btn-default" title="Éditer l'annonce"><span class="glyphicon glyphicon-edit"></span></a></td>
                     <td>
+                        {{ form_start(form_supprimer) }}
                         <button class="btn btn-danger" type="submit" title="Supprimer l'annonce"><span class="glyphicon glyphicon-trash"></span></button>
+                        {{ form_end(form_supprimer) }}
                     </td>
                 </tr>
             {% endfor %}

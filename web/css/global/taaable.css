@@ -50,6 +50,20 @@
     text-align: center;
 }
 
+.table.aaa-table > tbody > tr > td.aaa-icon,
+.table.aaa-table > tbody > tr > th.aaa-icon,
+.table.aaa-table > tfoot > tr > td.aaa-icon,
+.table.aaa-table > tfoot > tr > th.aaa-icon,
+.table.aaa-table > thead > tr > td.aaa-icon,
+.table.aaa-table > thead > tr > th.aaa-icon {
+    text-align: center;
+}
+
+.table.aaa-table > tbody > tr > td.aaa-icon > span,
+.table.aaa-table > tbody > tr > th.aaa-icon > span {
+    color: #999;
+}
+
 .table.aaa-table > tbody > tr.aaa-row-clickable,
 .table.aaa-table > tfoot > tr.aaa-row-clickable,
 .table.aaa-table > thead > tr.aaa-row-clickable {

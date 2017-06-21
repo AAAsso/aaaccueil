@@ -1,48 +1,78 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ application.label }}{% endblock %}
+
 {% block body %}
-    <h1>Application</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li><a href="{{ path('application_liste') }}">Applications</a></li>
+            <li class="active">{{ application.label }}</li>
+        </ol>
+        <h1>Application</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ application.id }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ application.slug }}</td>
-            </tr>
-            <tr>
-                <th>Label</th>
-                <td>{{ application.label }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ application.description }}</td>
-            </tr>
-            <tr>
-                <th>Urldirecte</th>
-                <td>{{ application.urlDirecte }}</td>
-            </tr>
-            <tr>
-                <th>Estpublic</th>
-                <td>{% if application.estPublic %}Yes{% else %}No{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+        <dl class="dl-horizontal">
+            <dt>ID</dt>
+            <dd>{{ application.id }}</dd>
+            <dt>Slug</dt>
+            <dd>{{ application.slug }}</dd>
+            <dt>A été créé le</dt>
+            <dd>{% if application.dateCreation %}{{ application.dateCreation|date('d F Y à H:i') }}{% endif %}</dd>
+        </dl>
 
-    <ul>
-        <li>
-            <a href="{{ path('application_liste') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('application_editer', { 'slug': application.slug }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(form_supprimer) }}
-                <input type="submit" value="Delete">
-            {{ form_end(form_supprimer) }}
-        </li>
-    </ul>
+        <dl class="dl-horizontal">
+            <dt>Label</dt>
+            <dd>{{ application.label }}</dd>
+            <dt>Créateur</dt>
+            <dd>{{ application.createur.pseudo }}</dd>
+            <dt>Url directe</dt>
+            <dd>
+                {% if application.urlDirecte %}
+                    <a href="{{ application.urlDirecte }}" target="_blank">{{ application.urlDirecte }}<span class="glyphicon glyphicon-link"></span></a>
+                {% else %} -- {% endif %}
+            </dd>
+            <dt>Description</dt>
+            <dd>{{ application.description }}</dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>Visibilité</dt>
+            <dd>{% if application.estPublic %}Publique{% else %}Privée{% endif %}</dd>
+        </dl>
+    </div>
+
+    <div class="col-md-6">
+        <button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ application.slug }}"><span class="glyphicon glyphicon-trash"></span> Supprimer l'application</button>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('application_editer', { 'slug': application.slug }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Éditer l'application</a>
+    </div>
+
+    <div id="modal-confirmation-suppression">
+        <div id="modal-{{ application.slug }}" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Voulez-vous supprimer l'application {{ application.label }} ?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-left">
+                        <div class="row">
+                            <div class="col-md-6 text-left">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                {{ form_start(form_supprimer) }}
+                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                                {{ form_end(form_supprimer) }}
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
 {% endblock %}

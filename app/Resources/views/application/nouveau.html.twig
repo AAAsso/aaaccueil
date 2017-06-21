@@ -1,16 +1,25 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Nouvelle application{% endblock %}
+
 {% block body %}
-    <h1>Application creation</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li><a href="{{ path('application_liste') }}">Applications</a></li>
+            <li class="active">Répertorier une nouvelle application</li>
+        </ol>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('application_liste') }}">Back to the list</a>
-        </li>
-    </ul>
+        <h1>Répertorier une nouvelle application</h1>
+    </div>
+    <div class="col-md-12">
+        {{ form_start(form, {'attr': {'id': 'form_repertorier_application'}}) }}
+            {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('application_liste') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</a>
+        <button class="btn btn-primary" form="form_repertorier_application"><span class="glyphicon glyphicon-ok"></span> Répertorier l'application</button>
+    </div>
 {% endblock %}

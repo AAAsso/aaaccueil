@@ -24,18 +24,18 @@ class ApplicationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $applications = $em->getRepository('AppBundle:Application')->findAll();
-        
+
         $deleteForms = array();
-        
+
         foreach($applications as $application)
         {
             $deleteForm = $this->createDeleteForm($application);
             $deleteForms[$application->getId()] = $deleteForm->createView();
-        } 
+        }
 
         return $this->render('application/liste.html.twig', array(
             'applications' => $applications,
-            'forms_supprimer' => $deleteForms, 
+            'forms_supprimer' => $deleteForms,
         ));
     }
 
@@ -48,15 +48,15 @@ class ApplicationController extends Controller
     public function nouveauAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
         $application = new Application();
         $form = $this->createForm('AppBundle\Form\ApplicationType', $application);
         $form->handleRequest($request);
-        
+
         $application->setDateCreation(new \DateTime());
         // TODO:
         // Remplacer l'id 2 par l'id de l'utilisateur connecté
-        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);        
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);
         $application->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

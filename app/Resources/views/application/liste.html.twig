@@ -1,47 +1,101 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Applications{% endblock %}
+
 {% block body %}
-    <h1>Applications list</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li class="active">Applications</li>
+        </ol>
+        <h1>Applications</h1>
+    </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Slug</th>
-                <th>Label</th>
-                <th>Description</th>
-                <th>Urldirecte</th>
-                <th>Estpublic</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('application_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Répertorier une nouvelle application</a>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-hover aaa-table">
+            <thead>
+                <tr>
+                    <th class="aaa-id">Id</th>
+                    <th style="width: 8%">Slug</th>
+                    <th style="width: 20%">Label</th>
+                    <th style="width: 10%">Créateur</th>
+                    <th style="width: 10%" class="aaa-date">Création</th>
+                    <th style="width: 24%">Description</th>
+                    <th style="width: 20%">URL</th>
+                    <th style="width: 8%" class="aaa-icon">Visibilité</th>
+                    <th class="aaa-action"></th>
+                    <th class="aaa-action"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for application in applications %}
+                <tr class="aaa-row-clickable">
+                    <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';">{{ application.id }}</td>
+                    <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="ellipsis" title="{{ application.slug }}">{{ application.slug }}</td>
+                    <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="ellipsis" title="{{ application.label }}">{{ application.label }}</td>
+                    <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';">{{ application.createur.pseudo }}</td>
+                    <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="aaa-date">{% if application.dateCreation %}{{ application.dateCreation|date('d M Y') }}<br />{{ application.dateCreation|date('H:i') }}{% endif %}</td>
+                    <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="ellipsis" title="{{ application.description }}">{{ application.description }}</td>
+                    <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="ellipsis" title="{{ application.urlDirecte }}">
+                        {% if application.urlDirecte %}
+                            <a href="{{ application.urlDirecte }}" target="_blank">{{ application.urlDirecte }}</a>
+                        {% else %}
+                            --
+                        {% endif %}
+                    </td>
+                    <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="aaa-icon">
+                        {% if application.estPublic %}
+                            <span class="glyphicon glyphicon-user" title="Publique"></span>
+                        {% else %}
+                            <span class="glyphicon glyphicon-lock" title="Privée"></span>
+                        {% endif %}
+                    </td>
+                    <td><a href="{{ path('application_editer', { 'slug': application.slug }) }}" class="btn btn-default" title="Éditer l'application"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ application.slug }}" title="Supprimer l'application"><span class="glyphicon glyphicon-trash"></span></button></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('application_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Répertorier une nouvelle application</a>
+    </div>
+
+    <div id="modals-confirmation-suppression">
         {% for application in applications %}
-            <tr>
-                <td><a href="{{ path('application_detail', { 'slug': application.slug }) }}">{{ application.id }}</a></td>
-                <td>{{ application.slug }}</td>
-                <td>{{ application.label }}</td>
-                <td>{{ application.description }}</td>
-                <td>{{ application.urlDirecte }}</td>
-                <td>{% if application.estPublic %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('application_detail', { 'slug': application.slug }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('application_editer', { 'slug': application.slug }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+            {% set form_supprimer = forms_supprimer[application.id] %}
+            <div id="modal-{{ application.slug }}" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Voulez-vous supprimer l'application {{ application.label }} ?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer text-left">
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    {{ form_start(form_supprimer) }}
+                                        <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                                    {{ form_end(form_supprimer) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('application_nouveau') }}">Create a new application</a>
-        </li>
-    </ul>
+    </div>
 {% endblock %}

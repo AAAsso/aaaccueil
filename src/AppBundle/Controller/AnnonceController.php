@@ -24,18 +24,18 @@ class AnnonceController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $annonces = $em->getRepository('AppBundle:Annonce')->findAll();
-        
+
         $deleteForms = array();
-        
+
         foreach($annonces as $annonce)
         {
             $deleteForm = $this->createDeleteForm($annonce);
             $deleteForms[$annonce->getId()] = $deleteForm->createView();
-        }        
+        }
 
         return $this->render('annonce/liste.html.twig', array(
             'annonces' => $annonces,
-            'forms_supprimer' => $deleteForms, 
+            'forms_supprimer' => $deleteForms,
         ));
     }
 
@@ -48,15 +48,15 @@ class AnnonceController extends Controller
     public function nouveauAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
         $annonce = new Annonce();
         $form = $this->createForm('AppBundle\Form\AnnonceType', $annonce);
         $form->handleRequest($request);
-        
+
         $annonce->setDateCreation(new \DateTime());
         // TODO:
         // Remplacer l'id 2 par l'id de l'utilisateur connecté
-        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);        
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);
         $annonce->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

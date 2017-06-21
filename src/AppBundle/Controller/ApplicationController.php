@@ -23,11 +23,19 @@ class ApplicationController extends Controller
     public function listeAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $applications = $em->getRepository('AppBundle:Application')->findAll();
+
+        $deleteForms = array();
+
+        foreach($applications as $application)
+        {
+            $deleteForm = $this->createDeleteForm($application);
+            $deleteForms[$application->getId()] = $deleteForm->createView();
+        }
 
         return $this->render('application/liste.html.twig', array(
             'applications' => $applications,
+            'forms_supprimer' => $deleteForms,
         ));
     }
 

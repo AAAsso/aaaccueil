@@ -1,21 +1,57 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ application.label }}{% endblock %}
+
 {% block body %}
-    <h1>Application edit</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li><a href="{{ path('application_liste') }}">Applications</a></li>
+            <li class="active">{{ application.label }}</li>
+        </ol>
 
-    {{ form_start(form_editer) }}
-        {{ form_widget(form_editer) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(form_editer) }}
+        <h1>Éditer l'application</h1>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('application_liste') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(form_supprimer) }}
-                <input type="submit" value="Delete">
-            {{ form_end(form_supprimer) }}
-        </li>
-    </ul>
+    <div class="col-md-12">
+        {{ form_start(form_editer, {'attr': {'id': 'form_editer_application'}}) }}
+            {{ form_widget(form_editer) }}
+        {{ form_end(form_editer) }}
+    </div>
+
+    <div class="col-md-6">
+        <button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ application.slug }}"><span class="glyphicon glyphicon-trash"></span> Supprimer l'application</button>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('application_liste') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Annuler les modifications</a>
+        <button class="btn btn-primary" form="form_editer_application"><span class="glyphicon glyphicon-ok"></span> Enregistrer les modifications</button>
+    </div>
+
+    <div id="modal-confirmation-suppression">
+        <div id="modal-{{ application.slug }}" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Voulez-vous supprimer l'application {{ application.label }} ?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-left">
+                        <div class="row">
+                            <div class="col-md-6 text-left">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                {{ form_start(form_supprimer) }}
+                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                                {{ form_end(form_supprimer) }}
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
 {% endblock %}

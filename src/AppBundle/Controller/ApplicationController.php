@@ -31,6 +31,17 @@ class ApplicationController extends Controller
         ));
     }
 
+    public function navbarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $applications = $em->getRepository('AppBundle:Application')->findAll();
+
+        return $this->render('application/navbar.html.twig', array(
+            'applications' => $applications,
+        ));
+    }
+
     /**
      * Creates a new application entity.
      *
@@ -40,15 +51,15 @@ class ApplicationController extends Controller
     public function nouveauAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
         $application = new Application();
         $form = $this->createForm('AppBundle\Form\ApplicationType', $application);
         $form->handleRequest($request);
-        
+
         $application->setDateCreation(new \DateTime());
         // TODO:
         // Remplacer l'id 2 par l'id de l'utilisateur connecté
-        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);        
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);
         $application->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -21,7 +21,7 @@ class Application
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @Gedmo\Slug(fields={"label"}, updatable=false)
      * @ORM\Column(name="slug", type="string", length=550, unique=true)
@@ -45,10 +45,10 @@ class Application
     /**
      * @var string
      *
-     * @ORM\Column(name="url_directe", type="string", length=1000)
+     * @ORM\Column(name="url_directe", type="string", length=1000, nullable=true)
      */
     private $urlDirecte;
-    
+
     /**
      * @var \DateTime
      *
@@ -57,8 +57,8 @@ class Application
     private $dateCreation;
 
     /**
-     * @var Utilisateur 
-     *   
+     * @var Utilisateur
+     *
      * @ORM\ManyToOne(targetEntity="Utilisateur")
      * @ORM\JoinColumn(name="createur_id", referencedColumnName="id")
      */
@@ -80,12 +80,12 @@ class Application
     {
         return $this->id;
     }
-    
+
     /**
      * Get slug
      *
      * @return string
-     */    
+     */
     public function getSlug()
     {
         return $this->slug;
@@ -97,11 +97,11 @@ class Application
      * @param string $slug
      *
      * @return Application
-     */  
+     */
     public function setSlug($slug)
     {
         $this->slug = $slug;
-        
+
         return $this;
     }
 
@@ -176,7 +176,7 @@ class Application
     {
         return $this->urlDirecte;
     }
-    
+
     /**
      * Set dateCreation
      *
@@ -224,8 +224,8 @@ class Application
     public function getCreateur()
     {
         return $this->createur;
-    }    
-    
+    }
+
     /**
      * Get estPublic
      *
@@ -246,7 +246,7 @@ class Application
     public function setEstPublic($estPublic)
     {
         $this->estPublic = $estPublic;
-        
+
         return $this;
     }
 }

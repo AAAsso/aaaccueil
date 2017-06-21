@@ -20,117 +20,116 @@
         <!-- ------------------------------- -->
         <link rel="stylesheet" href="{{ asset('css/base.html.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/global/taaable.css') }}" />
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-principale-top" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href={{ path('aaaccueil') }}>AAAccueil</a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="navbar-principale-top">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAnonces <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><p class="navbar-btn text-center">
-                                    <a href={{ path('annonce_nouveau') }} class="btn btn-default">Créer</a>
-                                </p></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href={{ path('annonce_liste') }}>Voir toutes</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAplications <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <!-- Replacer par addresse contenue dans l'objet Application-->
-                                <li><a href="#">Mattermost</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Teamspeak</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Minecraft</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Don't Starve</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><p class="navbar-btn text-center">
-                                    <a href={{ path('application_nouveau') }} class="btn btn-default">Ajouter une entrée</a>
-                                </p></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href={{ path('application_liste') }}>Voir toutes</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projets <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">T</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">O</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">D</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">O</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Monitoring <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">T</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">O</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">D</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">O</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Login">
-                            <input type="password" class="form-control" placeholder="Mot de passe">
-                        </div>
-                        <button type="submit" class="btn btn-default">Se connecter</button>
-                    </form>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-        <div class="container">
-            {% block body %}{% endblock %}
-        </div>
-        {% block javascripts %}{% endblock %}
-    </body>
-
-    <!-- Navbar pied de page -->
-    <footer>
-        <nav class="navbar navbar-inverse navbar-fixed-bottom" id="aaa-navbar-bottom">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-bottom" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-bottom">
-                    <ul class="nav navbar-nav">
-                        <li><a href={{ path('a_propos') }}>À propos</a></li>
-                        <li><a href={{ path('equipe') }}>L'équipe</a></li>
-                        <li><a href={{ path('plan_du_site') }}>Plan du site</a></li>
-                        <li><a target="_blank" href="https://github.com/AAAsso/aaaccueil">Dépôt Git <span class="glyphicon glyphicon-link"></span></a></li>
-                        <li><a target="_blank" href="https://github.com/AAAsso/aaaccueil/issues/new">Rapporter un bug <span class="glyphicon glyphicon-link"></span></a></li>
-                    </ul>
-                </div>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-principale-top" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href={{ path('aaaccueil') }}>AAAccueil</a>
             </div>
-        </nav>
-    </footer>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-principale-top">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAnonces <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><p class="navbar-btn text-center">
+                                    <a href="{{ path('annonce_nouveau') }}" class="btn btn-default">Créer</a>
+                                </p></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ path('annonce_liste') }}">Voir toutes</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAplications <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            {{ render(controller('AppBundle:Application:navbar')) }}
+                            <li>
+                                <p class="navbar-btn text-center">
+                                    <a href="{{ path('application_nouveau') }}" class="btn btn-default">Ajouter une entrée</a>
+                                </p>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ path('application_liste') }}">Voir toutes</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projets <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">T</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">O</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">D</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">O</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Monitoring <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">T</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">O</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">D</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">O</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right" method="post" action="{{ path('login') }}">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="login" placeholder="Login ou e-mail">
+                        <input type="password" class="form-control" name="mdp" placeholder="Mot de passe">
+                    </div>
+                    <button type="submit" class="btn btn-default">Se connecter</button>
+                </form>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        {% if message.type is defined%}
+            <div class="alert alert-{{ message.type }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ message.contenu }}
+            </div>
+        {% endif %}
+    {% block body %}{% endblock %}
+</div>
+{% block javascripts %}{% endblock %}
+</body>
+<!-- Navbar pied de page -->
+<footer>
+    <nav class="navbar navbar-inverse navbar-fixed-bottom" id="aaa-navbar-bottom">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-bottom" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-bottom">
+                <ul class="nav navbar-nav">
+                    <li><a href={{ path('a_propos') }}>À propos</a></li>
+                    <li><a href={{ path('equipe') }}>L'équipe</a></li>
+                    <li><a href={{ path('plan_du_site') }}>Plan du site</a></li>
+                    <li><a target="_blank" href="https://github.com/AAAsso/aaaccueil">Dépôt Git <span class="glyphicon glyphicon-link"></span></a></li>
+                    <li><a target="_blank" href="https://github.com/AAAsso/aaaccueil/issues/new">Rapporter un bug <span class="glyphicon glyphicon-link"></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</footer>
 </html>

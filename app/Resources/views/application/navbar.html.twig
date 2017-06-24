@@ -1,6 +1,6 @@
 {% for application in applications %}
-    <li>
-        <p class="navbar-btn text-center">
+    <li class="text-center">
+        <p>
             <a href="{{ path('application_detail', {'slug': application.slug}) }}">{{ application.label }}</a>
             {% if application.urlDirecte %}
                 <a href="{{ application.urlDirecte }}"><span class="glyphicon glyphicon-link"></span></a>

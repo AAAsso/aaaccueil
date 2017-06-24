@@ -18,7 +18,7 @@ class ApplicationType extends AbstractType
         $builder            
             ->add('label', TextType::class, array('label' => 'Label'))
             ->add('description', TextareaType::class, array('label' => 'Description'))
-            ->add('urlDirecte', TextType::class, array('label' => 'Url directe vers l\'appli'))
+            ->add('urlDirecte', TextType::class, array('label' => 'Url directe vers l\'appli', 'required' => false))
             ->add('estPublic', null, array('label' => 'Est publique ?'));
     }
     

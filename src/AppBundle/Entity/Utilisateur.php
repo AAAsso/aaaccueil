@@ -11,14 +11,14 @@ use AppBundle\Entity\Notification;
  * @ORM\Table(name="utilisateur")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UtilisateurRepository")
  */
-class Utilisateur
+class Utilisateur implements \Serializable
 {
 
     public function __construct()
     {
         $this->notificationsLues = new ArrayCollection();
     }
-    
+
     /**
      * @var int
      *
@@ -65,7 +65,7 @@ class Utilisateur
      *      inverseJoinColumns={@ORM\JoinColumn(name="notification_id", referencedColumnName="id")}
      *      )
      */
-    private $notificationsLues;    
+    private $notificationsLues;
 
     /**
      * Get id
@@ -196,17 +196,17 @@ class Utilisateur
     {
         return $this->notificationsLues;
     }
-    
-    
+
+
     /**
      * Add notificationLue
      *
      * @return Utilisateur
      */
     public function addNotificationsLues($notificationLue)
-    {   
+    {
         $this->notificationsLues[] = $notificationLue;
-        
+
         return $this;
     }
 
@@ -232,5 +232,25 @@ class Utilisateur
     public function removeNotificationsLue(\AppBundle\Entity\Notification $notificationsLue)
     {
         $this->notificationsLues->removeElement($notificationsLue);
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->pseudo,
+            $this->mdp,
+            // $this->salt,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->pseudo,
+            $this->mdp,
+            // $this->salt
+        ) = unserialize($serialized);
     }
 }

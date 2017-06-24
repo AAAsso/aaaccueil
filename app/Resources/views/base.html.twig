@@ -44,7 +44,7 @@
                         <ul class="dropdown-menu">
                             <li><p class="navbar-btn text-center">
                                     <a href="{{ path('annonce_nouveau') }}" class="btn btn-default">Créer</a>
-                                </p></li>
+                                </li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ path('annonce_liste') }}">Voir toutes</a></li>
                         </ul>
@@ -87,23 +87,63 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-right" method="post" action="{{ path('login') }}">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="login" placeholder="Login ou e-mail">
-                        <input type="password" class="form-control" name="mdp" placeholder="Mot de passe">
-                    </div>
-                    <button type="submit" class="btn btn-default">Se connecter</button>
-                </form>
+                <!-- form login -->
+                {% if app.session.get('estConnecte') %}
+                    {% set utilisateur = app.session.get('utilisateur') %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="text-center"><a href="#" class="btn btn-default">Proposer</a></li>
+                                <li class="text-center"><a href="#">Planning</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-bell"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="text-center"><a href="{{ path('notification_nouveau') }}">Créer</a></li>
+                                <li class="text-center"><a href="{{ path('notification_liste') }}" class="btn btn-default">Voir toutes</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <!-- TODO : Remplacer le glyphicon-user par l'avatar, si disponible -->
+                                <span class="glyphicon glyphicon-user"></span> {{ utilisateur.pseudo }} <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="text-center"><a href="#">Profil</a></li>
+                                <li class="text-center"><a href="#">Préférences</a></li>
+                                <li class="text-center"><a href="{{ path('logout') }}" class="btn btn-default">Déconnexion</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                {% else %}
+                    <form class="navbar-form navbar-right" method="post" action="{{ path('login') }}">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="login" placeholder="Identifiant ou e-mail">
+                            <input type="password" class="form-control" name="mdp" placeholder="Mot de passe">
+                        </div>
+                        <button type="submit" class="btn btn-default">Se connecter</button>
+                    </form>
+                {% endif %}
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
     <div class="container">
-        {% if message.type is defined%}
-            <div class="alert alert-{{ message.type }} alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ message.contenu }}
-            </div>
-        {% endif %}
+        <div id="aaa-alert-messages" class="col-md-12">
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
     {% block body %}{% endblock %}
 </div>
 {% block javascripts %}{% endblock %}

@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function utilisateurExiste($login)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.pseudo = :pseudo OR u.mail = :mail')
+            ->setParameter('pseudo', $login)
+            ->setParameter('mail', $login)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

@@ -13,6 +13,11 @@ body { padding-top: 70px; padding-bottom: 70px; }
         padding-right: 30px;
     }
 }
+
+#aaa-alert-messages {
+    height: 72px;
+}
+
 #aaa-annonces {
     max-height: 200px;
     overflow: auto;

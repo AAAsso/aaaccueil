@@ -5,9 +5,11 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class SecurityController extends Controller
 {
+
     /**
      * @Route("/login", name="login")
      */
@@ -17,25 +19,41 @@ class SecurityController extends Controller
 
         $login = $request->get('login');
 
-        $utilisateurExiste = $em->getRepository('AppBundle:Utilisateur')->utilisateurExiste($login);
+        $utilisateur = $em->getRepository('AppBundle:Utilisateur')->utilisateurExiste($login);
 
-        $message = array();
-        $message['type'] = 'warning';
-        $message['contenu'] = 'teste';
+        $session = new Session();
 
-        if(!is_null($utilisateurExiste))
+        if (!is_null($utilisateur))
         {
             $mdp = $request->get('mdp');
 
+            if ($mdp === $utilisateur->getMdp())
+            {
+                // Ajout de message d'alerte
+                $session->getFlashBag()->add(
+                        'success', 'Bienvienue '.$utilisateur->getPseudo()
+                );
+
+                $session->set('estConnecte', true);
+                $session->set('utilisateur', $utilisateur);
+            }
+            else
+            {
+                // Ajout de message d'alerte
+                $session->getFlashBag()->add(
+                        'danger', 'Mot de passe incorrect.'
+                );
+            }
         }
         else
         {
-
+            // Ajout de message d'alerte
+            $session->getFlashBag()->add(
+                    'danger', 'Login incorrect.'
+            );
         }
 
-        return $this->forward('AppBundle:Main:index', array(
-            'message'  => $message,
-        ));
+        return $this->redirectToRoute('aaaccueil');
     }
 
     /**
@@ -43,9 +61,9 @@ class SecurityController extends Controller
      */
     public function logoutAction()
     {
-        return $this->render('index/index.html.twig', array(
-            // ...
-        ));
-    }
+        $session = new Session();
+        $session->clear();
 
+        return $this->redirectToRoute('aaaccueil');
+    }
 }

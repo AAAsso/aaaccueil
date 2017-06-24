@@ -31,6 +31,17 @@ class NotificationController extends Controller
         ));
     }
 
+    public function navbarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $notifications = $em->getRepository('AppBundle:Notification')->findAll();
+
+        return $this->render('notification/navbar.html.twig', array(
+            'notifications' => $notifications,
+        ));
+    }
+
     /**
      * Creates a new notification entity.
      *
@@ -40,15 +51,15 @@ class NotificationController extends Controller
     public function nouveauAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-    
+
         $notification = new Notification();
         $form = $this->createForm('AppBundle\Form\NotificationType', $notification);
         $form->handleRequest($request);
-        
+
         $notification->setDateCreation(new \DateTime());
         // TODO:
         // Remplacer l'id 2 par l'id de l'utilisateur connecté
-        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);        
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);
         $notification->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

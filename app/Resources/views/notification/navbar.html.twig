@@ -1,0 +1,13 @@
+{% for notification in notifications %}
+    <li class="text-center">
+        <span class="glyphicon {{ notification.icone }}"></span>
+        <strong>{{ notification.titre }}</strong>
+        {% if notification.estPublic %}
+            <span class="glyphicon glyphicon-ok-circle"></span>
+        {% else %}
+            <span class="glyphicon glyphicon-ban-circle"></span>
+        {% endif %}
+        <p>{{ notification.description }}</p>
+    </li>
+    <li role="separator" class="divider"></li>
+{% endfor %}

@@ -42,48 +42,43 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAnonces <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><p class="navbar-btn text-center">
-                                    <a href="{{ path('annonce_nouveau') }}" class="btn btn-default">Créer</a>
-                                </li>
+                            <li class="text-center"><a href="{{ path('annonce_nouveau') }}" class="btn btn-default">Créer</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{{ path('annonce_liste') }}">Voir toutes</a></li>
+                            <li class="text-center"><a href="{{ path('annonce_liste') }}">Voir toutes</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAplications <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             {{ render(controller('AppBundle:Application:navbar')) }}
-                            <li>
-                                <p class="navbar-btn text-center">
-                                    <a href="{{ path('application_nouveau') }}" class="btn btn-default">Ajouter une entrée</a>
-                                </p>
-                            </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{{ path('application_liste') }}">Voir toutes</a></li>
+                            <li class="text-center"><a href="{{ path('application_nouveau') }}" class="btn btn-default">Ajouter une entrée</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="text-center"><a href="{{ path('application_liste') }}">Voir toutes</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projets <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">T</a></li>
+                            <li class="text-center"><a href="#">T</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">O</a></li>
+                            <li class="text-center"><a href="#">O</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">D</a></li>
+                            <li class="text-center"><a href="#">D</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">O</a></li>
+                            <li class="text-center"><a href="#">O</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Monitoring <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">T</a></li>
+                            <li class="text-center"><a href="#">T</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">O</a></li>
+                            <li class="text-center"><a href="#">O</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">D</a></li>
+                            <li class="text-center"><a href="#">D</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">O</a></li>
+                            <li class="text-center"><a href="#">O</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -97,6 +92,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="text-center"><a href="#" class="btn btn-default">Proposer</a></li>
+                                <li role="separator" class="divider"></li>
                                 <li class="text-center"><a href="#">Planning</a></li>
                             </ul>
                         </li>
@@ -105,8 +101,10 @@
                                 <span class="glyphicon glyphicon-bell"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="text-center"><a href="{{ path('notification_nouveau') }}">Créer</a></li>
-                                <li class="text-center"><a href="{{ path('notification_liste') }}" class="btn btn-default">Voir toutes</a></li>
+                                {{ render(controller('AppBundle:Notification:navbar')) }}
+                                <li class="text-center"><a href="{{ path('notification_nouveau') }}" class="btn btn-default">Créer</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li class="text-center"><a href="{{ path('notification_liste') }}">Voir toutes</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -116,8 +114,10 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="text-center"><a href="#">Profil</a></li>
+                                <li role="separator" class="divider"></li>
                                 <li class="text-center"><a href="#">Préférences</a></li>
-                                <li class="text-center"><a href="{{ path('logout') }}" class="btn btn-default">Déconnexion</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li class="navbar-btn text-center"><a href="{{ path('logout') }}" class="btn btn-default">Déconnexion</a></li>
                             </ul>
                         </li>
                     </ul>

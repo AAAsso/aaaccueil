@@ -1,52 +1,75 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ evenement.label }}{% endblock %}
+
 {% block body %}
-    <h1>Evenement</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li><a href="{{ path('evenement_liste') }}">Événement</a></li>
+            <li class="active">{{ evenement.label }}</li>
+        </ol>
+        <h1>Événement</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ evenement.id }}</td>
-            </tr>
-            <tr>
-                <th>Label</th>
-                <td>{{ evenement.label }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ evenement.description }}</td>
-            </tr>
-            <tr>
-                <th>Datecreation</th>
-                <td>{% if evenement.dateCreation %}{{ evenement.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Datedebut</th>
-                <td>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Datefin</th>
-                <td>{% if evenement.dateFin %}{{ evenement.dateFin|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ evenement.slug }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <dl class="dl-horizontal">
+            <dt>ID</dt>
+            <dd>{{ evenement.id }}</dd>
+            <dt>Slug</dt>
+            <dd>{{ evenement.slug }}</dd>
+            <dt>A été créé le</dt>
+            <dd>{% if evenement.dateCreation %}{{ evenement.dateCreation|date('d F Y à H:i') }}{% endif %}</dd>
+        </dl>
 
-    <ul>
-        <li>
-            <a href="{{ path('evenement_liste') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('evenement_editer', { 'slug': evenement.slug }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
-{% endblock %}
+        <dl class="dl-horizontal">
+            <dt>Label</dt>
+            <dd>{{ evenement.label }}</dd>
+            <dt>Créateur</dt>
+            <dd>{{ evenement.createur.pseudo }}</dd>
+            <dt>Débute le</dt>
+            <dd>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d F Y à H:i') }}{% endif %}</dd>
+            <dt>Termine le</dt>
+            <dd>{% if evenement.dateFin %}{{ evenement.dateFin|date('d F Y à H:i') }}{% endif %}</dd>
+            <dt>Description</dt>
+            <dd>{{ evenement.description }}</dd>
+        </dl>
+
+        <dl class="dl-horizontal">
+            <dt>Visibilité</dt>
+            <dd>{% if evenement.estPublic %}Public{% else %}Privé{% endif %}</dd>
+        </dl>
+
+        <div class="col-md-6">
+            <button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ evenement.slug }}"><span class="glyphicon glyphicon-trash"></span> Supprimer l'événement</button>
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="{{ path('evenement_editer', { 'slug': evenement.slug }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Éditer l'événement</a>
+        </div>
+
+        <div id="modal-confirmation-suppression">
+        <div id="modal-{{ evenement.slug }}" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Voulez-vous supprimer l'événement {{ evenement.label }} ?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-left">
+                        <div class="row">
+                            <div class="col-md-6 text-left">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                {{ form_start(form_supprimer) }}
+                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                                {{ form_end(form_supprimer) }}
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+    {% endblock %}

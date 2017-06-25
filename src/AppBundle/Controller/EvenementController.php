@@ -85,7 +85,7 @@ class EvenementController extends Controller
 
         return $this->render('evenement/detail.html.twig', array(
             'evenement' => $evenement,
-            'delete_form' => $deleteForm->createView(),
+            'form_supprimer' => $deleteForm->createView(),
         ));
     }
 

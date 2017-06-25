@@ -10,4 +10,26 @@ namespace AppBundle\Repository;
  */
 class EvenementRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findComingOnes()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM AppBundle:Evenement a '
+                . 'WHERE a.dateDebut >= CURRENT_TIMESTAMP() '
+                . 'ORDER BY a.dateDebut ASC '
+            )
+            ->setMaxResults(10)->getResult();
+    }
+
+    public function findComingAndPublicOnes()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM AppBundle:Evenement a '
+                . 'WHERE a.dateDebut >= CURRENT_TIMESTAMP() '
+                . 'AND a.estPublic = true '
+                . 'ORDER BY a.dateDebut ASC '
+            )
+            ->setMaxResults(10)->getResult();
+    }
 }

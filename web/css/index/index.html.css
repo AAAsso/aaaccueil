@@ -1,0 +1,27 @@
+#aaa-annonces {
+    max-height: 200px;
+    overflow: auto;
+}
+#aaa-annonces .aaa-annonce {
+    padding: 20px;
+    background-color: #EEE;
+    margin-bottom: 5px;
+}
+#aaa-annonces .aaa-annonce h4 {
+    margin-top: 0px;
+}
+#aaa-annonces .aaa-annonce small {
+    color: #888;
+}
+#aaa-annonces .aaa-annonce p {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+#aaa-evenements-a-venir {
+    max-height: 300px;
+    overflow: auto;
+    background-color: #EEE;
+    padding-left: 20px;
+    padding-bottom: 10px;
+}

@@ -1,16 +1,27 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Nouvel événement{% endblock %}
+
 {% block body %}
-    <h1>Evenement creation</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li><a href="{{ path('evenement_liste') }}">Événements</a></li>
+            <li class="active">Créer un nouvel événement</li>
+        </ol>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+        <h1>Créer un nouvel événement</h1>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('evenement_liste') }}">Back to the list</a>
-        </li>
-    </ul>
+    <div class="col-md-12">
+        {{ form_start(form, {'attr': {'id': 'form_creer_evenement'}}) }}
+            {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('evenement_liste') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</a>
+        <button class="btn btn-primary" form="form_creer_evenement"><span class="glyphicon glyphicon-ok"></span> Créer l'événement</button>
+    </div>
 {% endblock %}

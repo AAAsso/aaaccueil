@@ -54,9 +54,9 @@ class EvenementController extends Controller
         $form->handleRequest($request);
 
         $evenement->setDateCreation(new \DateTime());
-        // TODO:
-        // Remplacer l'id 2 par l'id de l'utilisateur connecté
-        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);
+
+        $session = new Session();
+        $createur = $session->get('utilisateur');
         $evenement->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Application controller.
@@ -65,9 +67,9 @@ class ApplicationController extends Controller
         $form->handleRequest($request);
 
         $application->setDateCreation(new \DateTime());
-        // TODO:
-        // Remplacer l'id 2 par l'id de l'utilisateur connecté
-        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);
+
+        $session = new Session();
+        $createur = $session->get('utilisateur');
         $application->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

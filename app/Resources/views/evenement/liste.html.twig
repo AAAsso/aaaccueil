@@ -1,49 +1,97 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Événements{% endblock %}
+
 {% block body %}
-    <h1>Evenements list</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li class="active">Événements</li>
+        </ol>
+        <h1>Événements</h1>
+    </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Label</th>
-                <th>Description</th>
-                <th>Datecreation</th>
-                <th>Datedebut</th>
-                <th>Datefin</th>
-                <th>Slug</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('evenement_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Créer un nouvel événement</a>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-hover aaa-table">
+            <thead>
+                <tr>
+                    <th class="aaa-id">Id</th>
+                    <th style="width: 8%">Slug</th>
+                    <th style="width: 20%">Label</th>
+                    <th style="width: 10%">Créateur</th>
+                    <th style="width: 10%" class="aaa-date">Création</th>
+                    <th style="width: 24%">Description</th>
+                    <th style="width: 10%" class="aaa-date">Débute le</th>
+                    <th style="width: 10%" class="aaa-date">Termine le</th>
+                    <th style="width: 8%" class="aaa-icon">Visibilité</th>
+                    <th class="aaa-action"></th>
+                    <th class="aaa-action"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evenement in evenements %}
+                    <tr class="aaa-row-clickable">
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';">{{ evenement.id }}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="ellipsis" title="{{ evenement.slug }}">{{ evenement.slug }}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="ellipsis" title="{{ evenement.label }}">{{ evenement.label }}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';">{{ evenement.createur.pseudo }}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-date">{% if evenement.dateCreation %}{{ evenement.dateCreation|date('d M Y') }}<br />{{ evenement.dateCreation|date('H:i') }}{% endif %}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="ellipsis" title="{{ evenement.description }}">{{ evenement.description }}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-date">{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d M Y') }}<br />{{ evenement.dateDebut|date('H:i') }}{% endif %}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-date">{% if evenement.dateFin %}{{ evenement.dateFin|date('d M Y') }}<br />{{ evenement.dateFin|date('H:i') }}{% endif %}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-icon">
+                            {% if evenement.estPublic %}
+                                <span class="glyphicon glyphicon-user" title="Publique"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-lock" title="Privée"></span>
+                            {% endif %}
+                        </td>
+                        <td><a href="{{ path('evenement_editer', { 'slug': evenement.slug }) }}" class="btn btn-default" title="Éditer l'événement"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ evenement.slug }}" title="Supprimer l'événement"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('evenement_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Créer un nouvel événement</a>
+    </div>
+
+    <div id="modals-confirmation-suppression">
         {% for evenement in evenements %}
-            <tr>
-                <td><a href="{{ path('evenement_detail', { 'slug': evenement.slug }) }}">{{ evenement.id }}</a></td>
-                <td>{{ evenement.label }}</td>
-                <td>{{ evenement.description }}</td>
-                <td>{% if evenement.dateCreation %}{{ evenement.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if evenement.dateFin %}{{ evenement.dateFin|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ evenement.slug }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('evenement_detail', { 'slug': evenement.slug }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('evenement_editer', { 'slug': evenement.slug }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+            {% set form_supprimer = forms_supprimer[evenement.id] %}
+            <div id="modal-{{ evenement.slug }}" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Voulez-vous supprimer l'événement {{ evenement.label }} ?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer text-left">
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    {{ form_start(form_supprimer) }}
+                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                                    {{ form_end(form_supprimer) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('evenement_nouveau') }}">Create a new evenement</a>
-        </li>
-    </ul>
+    </div>
 {% endblock %}

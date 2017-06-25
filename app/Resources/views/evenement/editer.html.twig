@@ -1,21 +1,57 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ evenement.label }}{% endblock %}
+
 {% block body %}
-    <h1>Evenement edit</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li><a href="{{ path('evenement_liste') }}">Événements</a></li>
+            <li class="active">{{ evenement.label }}</li>
+        </ol>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+        <h1>Éditer l'événement</h1>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('evenement_liste') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="col-md-12">
+        {{ form_start(form_editer, {'attr': {'id': 'form_editer_evenement'}}) }}
+            {{ form_widget(form_editer) }}
+        {{ form_end(form_editer) }}
+    </div>
+
+    <div class="col-md-6">
+        <button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ evenement.slug }}"><span class="glyphicon glyphicon-trash"></span> Supprimer l'evenement</button>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('evenement_liste') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Annuler les modifications</a>
+        <button class="btn btn-primary" form="form_editer_evenement"><span class="glyphicon glyphicon-ok"></span> Enregistrer les modifications</button>
+    </div>
+
+    <div id="modal-confirmation-suppression">
+        <div id="modal-{{ evenement.slug }}" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Voulez-vous supprimer l'événement {{ evenement.label }} ?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-left">
+                        <div class="row">
+                            <div class="col-md-6 text-left">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                {{ form_start(form_supprimer) }}
+                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                                {{ form_end(form_supprimer) }}
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
 {% endblock %}

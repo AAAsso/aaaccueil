@@ -104,13 +104,13 @@ class EvenementController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('evenement_editer', ['slug' => $evenement->getSlug()]);
+            return $this->redirectToRoute('evenement_detail', ['slug' => $evenement->getSlug()]);
         }
 
         return $this->render('evenement/editer.html.twig', [
             'evenement' => $evenement,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form_editer' => $editForm->createView(),
+            'form_supprimer' => $deleteForm->createView(),
         ]);
     }
 

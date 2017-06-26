@@ -17,7 +17,7 @@
             <dt>Slug</dt>
             <dd>{{ evenement.slug }}</dd>
             <dt>A été créé le</dt>
-            <dd>{% if evenement.dateCreation %}{{ evenement.dateCreation|date('d F Y à H:i') }}{% endif %}</dd>
+            <dd>{% if evenement.dateCreation %}{{ evenement.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y à H:mm') }}{% endif %}</dd>
         </dl>
 
         <dl class="dl-horizontal">
@@ -26,9 +26,9 @@
             <dt>Créateur</dt>
             <dd>{{ evenement.createur.pseudo }}</dd>
             <dt>Débute le</dt>
-            <dd>{% if evenement.dateDebut %}{{ evenement.dateDebut|date('d F Y à H:i') }}{% endif %}</dd>
+            <dd>{% if evenement.dateDebut %}{{ evenement.dateDebut|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y à H:mm') }}{% endif %}</dd>
             <dt>Termine le</dt>
-            <dd>{% if evenement.dateFin %}{{ evenement.dateFin|date('d F Y à H:i') }}{% endif %}</dd>
+            <dd>{% if evenement.dateFin %}{{ evenement.dateFin||localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y à H:mm') }}{% endif %}</dd>
             <dt>Description</dt>
             <dd>{{ evenement.description }}</dd>
         </dl>

@@ -39,8 +39,8 @@
                     <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="ellipsis" title="{{ annonce.slug }}">{{ annonce.slug }}</td>
                     <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="ellipsis" title="{{ annonce.titre }}">{{ annonce.titre }}</td>
                     <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';">{{ annonce.createur.pseudo }}</td>
-                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="aaa-date">{% if annonce.dateCreation %}{{ annonce.dateCreation|date('d M Y') }}<br />{{ annonce.dateCreation|date('H:i') }}{% endif %}</td>
-                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="aaa-date">{% if annonce.datePublication %}{{ annonce.datePublication|date('d M Y') }}<br />{{ annonce.datePublication|date('H:i') }}{% endif %}</td>
+                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="aaa-date">{% if annonce.dateCreation %}{{ annonce.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y') }}<br />{{ annonce.dateCreation|date('H:i') }}{% endif %}</td>
+                    <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="aaa-date">{% if annonce.datePublication %}{{ annonce.datePublication|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y') }}<br />{{ annonce.datePublication|date('H:i') }}{% endif %}</td>
                     <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="ellipsis" title="{{ annonce.contenu }}">{{ annonce.contenu }}</td>
                     <td onclick="window.document.location='{{ path('annonce_detail', { 'slug': annonce.slug }) }}';" class="aaa-icon">
                         {% if annonce.estPublic %}

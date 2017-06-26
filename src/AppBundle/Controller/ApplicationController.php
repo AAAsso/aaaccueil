@@ -69,7 +69,8 @@ class ApplicationController extends Controller
         $application->setDateCreation(new \DateTime());
 
         $session = new Session();
-        $createur = $session->get('utilisateur');
+        $utilisateurConnecte = $session->get('utilisateur');
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find($utilisateurConnecte->getId());
         $application->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -61,7 +61,8 @@ class NotificationController extends Controller
         $notification->setDateCreation(new \DateTime());
 
         $session = new Session();
-        $createur = $session->get('utilisateur');
+        $utilisateurConnecte = $session->get('utilisateur');
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find($utilisateurConnecte->getId());
         $notification->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

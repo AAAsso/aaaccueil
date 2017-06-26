@@ -58,7 +58,8 @@ class AnnonceController extends Controller
         $annonce->setDateCreation(new \DateTime());
 
         $session = new Session();
-        $createur = $session->get('utilisateur');
+        $utilisateurConnecte = $session->get('utilisateur');
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find($utilisateurConnecte->getId());
         $annonce->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

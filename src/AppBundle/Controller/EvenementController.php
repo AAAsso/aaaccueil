@@ -19,7 +19,7 @@ class EvenementController extends Controller
     /**
      * Lists all evenement entities.
      *
-     * @Route("/", name="evenement_liste")
+     * @Route("/liste", name="evenement_liste")
      * @Method("GET")
      */
     public function listeAction()
@@ -58,7 +58,8 @@ class EvenementController extends Controller
         $evenement->setDateCreation(new \DateTime());
 
         $session = new Session();
-        $createur = $session->get('utilisateur');
+        $utilisateurConnecte = $session->get('utilisateur');
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find($utilisateurConnecte->getId());
         $evenement->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

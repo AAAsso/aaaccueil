@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class EvenementController extends Controller
 {
+
     /**
      * Lists all evenement entities.
      *
@@ -31,15 +32,15 @@ class EvenementController extends Controller
 
         $deleteForms = [];
 
-        foreach($evenements as $evenement)
+        foreach ($evenements as $evenement)
         {
             $deleteForm = $this->createDeleteForm($evenement);
             $deleteForms[$evenement->getId()] = $deleteForm->createView();
         }
 
         return $this->render('evenement/liste.html.twig', [
-            'evenements' => $evenements,
-            'forms_supprimer' => $deleteForms,
+                'evenements' => $evenements,
+                'forms_supprimer' => $deleteForms,
         ]);
     }
 
@@ -64,7 +65,8 @@ class EvenementController extends Controller
         $createur = $em->getRepository('AppBundle:Utilisateur')->find($utilisateurConnecte->getId());
         $evenement->setCreateur($createur);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->persist($evenement);
             $em->flush();
@@ -73,8 +75,8 @@ class EvenementController extends Controller
         }
 
         return $this->render('evenement/nouveau.html.twig', [
-            'evenement' => $evenement,
-            'form' => $form->createView(),
+                'evenement' => $evenement,
+                'form' => $form->createView(),
         ]);
     }
 
@@ -89,8 +91,8 @@ class EvenementController extends Controller
         $deleteForm = $this->createDeleteForm($evenement);
 
         return $this->render('evenement/detail.html.twig', array(
-            'evenement' => $evenement,
-            'form_supprimer' => $deleteForm->createView(),
+                'evenement' => $evenement,
+                'form_supprimer' => $deleteForm->createView(),
         ));
     }
 
@@ -106,16 +108,17 @@ class EvenementController extends Controller
         $editForm = $this->createForm('AppBundle\Form\EvenementType', $evenement);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('evenement_detail', ['slug' => $evenement->getSlug()]);
         }
 
         return $this->render('evenement/editer.html.twig', [
-            'evenement' => $evenement,
-            'form_editer' => $editForm->createView(),
-            'form_supprimer' => $deleteForm->createView(),
+                'evenement' => $evenement,
+                'form_editer' => $editForm->createView(),
+                'form_supprimer' => $deleteForm->createView(),
         ]);
     }
 
@@ -130,7 +133,8 @@ class EvenementController extends Controller
         $form = $this->createDeleteForm($evenement);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
             $em = $this->getDoctrine()->getManager();
             $em->remove($evenement);
             $em->flush();
@@ -149,9 +153,9 @@ class EvenementController extends Controller
     private function createDeleteForm(Evenement $evenement)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('evenement_supprimer', ['slug' => $evenement->getSlug()]))
-            ->setMethod('DELETE')
-            ->getForm()
+                ->setAction($this->generateUrl('evenement_supprimer', ['slug' => $evenement->getSlug()]))
+                ->setMethod('DELETE')
+                ->getForm()
         ;
     }
 

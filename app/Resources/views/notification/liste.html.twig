@@ -1,49 +1,98 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Notifications{% endblock %}
+
 {% block body %}
-    <h1>Notifications list</h1>
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li class="active">Notifications</li>
+        </ol>
+        <h1>Notifications</h1>
+    </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Slug</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Icone</th>
-                <th>Datecreation</th>
-                <th>Estpublic</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('notification_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Créer une nouvelle notification</a>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-hover aaa-table">
+            <thead>
+                <tr>
+                    <th class="aaa-id">Id</th>
+                    <th style="width: 8%" class="aaa-icon">Icône</th>
+                    <th style="width: 8%">Slug</th>
+                    <th style="width: 20%">Titre</th>
+                    <th style="width: 10%">Créateur</th>
+                    <th style="width: 10%" class="aaa-date">Création</th>
+                    <th style="width: 36%">Description</th>
+                    <th style="width: 8%" class="aaa-icon">Visibilité</th>
+                    <th class="aaa-action"></th>
+                    <th class="aaa-action"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for notification in notifications %}
+                    <tr class="aaa-row-clickable">
+                        <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';">{{ notification.id }}</td>
+                        <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';" class="aaa-icon">
+                            <span class="{{ notification.icone }}" title="{{ notification.icone }}"></span>
+                        </td>
+                        <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';" class="ellipsis" title="{{ notification.slug }}">{{ notification.slug }}</td>
+                        <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';" class="ellipsis" title="{{ notification.titre }}">{{ notification.titre }}</td>
+                        <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';">{{ notification.createur.pseudo }}</td>
+                        <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';" class="aaa-date">{% if notification.dateCreation %}{{ notification.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}<br />{{ notification.dateCreation|date('H:i') }}{% endif %}</td>
+                        <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';" class="ellipsis" title="{{ notification.description }}">{{ notification.description }}</td>
+                        <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';" class="aaa-icon">
+                            {% if notification.estPublic %}
+                                <span class="glyphicon glyphicon-user" title="Publique"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-lock" title="Privée"></span>
+                            {% endif %}
+                        </td>
+                        <td><a href="{{ path('notification_editer', { 'slug': notification.slug }) }}" class="btn btn-default" title="Éditer l'événement"><span class="glyphicon glyphicon-edit"></span></a></td>
+                        <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ notification.slug }}" title="Supprimer l'événement"><span class="glyphicon glyphicon-trash"></span></button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('notification_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Créer une nouvelle notification</a>
+    </div>
+
+    <div id="modals-confirmation-suppression">
         {% for notification in notifications %}
-            <tr>
-                <td><a href="{{ path('notification_detail', { 'slug': notification.slug }) }}">{{ notification.id }}</a></td>
-                <td>{{ notification.slug }}</td>
-                <td>{{ notification.titre }}</td>
-                <td>{{ notification.description }}</td>
-                <td><span class="glyphicon {{ notification.icone }}" aria-hidden="true"></span></td>
-                <td>{% if notification.dateCreation %}{{ notification.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y') }}<br />{{ notification.dateCreation|date('H:i') }}{% endif %}</td>
-                <td>{% if notification.estPublic %}Yes{% else %}No{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('notification_detail', { 'slug': notification.slug }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('notification_editer', { 'slug': notification.slug }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+            {% set form_supprimer = forms_supprimer[notification.id] %}
+            <div id="modal-{{ notification.slug }}" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Voulez-vous supprimer la notification {{ notification.titre }} ?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer text-left">
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    {{ form_start(form_supprimer) }}
+                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                                    {{ form_end(form_supprimer) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('notification_nouveau') }}">Create a new notification</a>
-        </li>
-    </ul>
 {% endblock %}

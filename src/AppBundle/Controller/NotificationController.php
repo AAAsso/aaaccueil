@@ -25,12 +25,20 @@ class NotificationController extends Controller
     public function listeAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $notifications = $em->getRepository('AppBundle:Notification')->findAll();
 
-        return $this->render('notification/liste.html.twig', array(
+        $deleteForms = [];
+
+        foreach ($notifications as $notification)
+        {
+            $deleteForm = $this->createDeleteForm($notification);
+            $deleteForms[$notification->getId()] = $deleteForm->createView();
+        }
+
+        return $this->render('notification/liste.html.twig', [
             'notifications' => $notifications,
-        ));
+            'forms_supprimer' => $deleteForms,
+        ]);
     }
 
     public function navbarAction()

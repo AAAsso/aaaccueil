@@ -17,3 +17,25 @@ body { padding-top: 70px; padding-bottom: 70px; }
 #aaa-alert-messages {
     height: 72px;
 }
+
+#aaaccueil-navigation-notifications {
+    width: 200px;
+}
+
+.aaaccueil-navigation-notification {
+    padding: 2px 8px;
+}
+
+.aaaccueil-navigation-notification > .aaaccueil-notification-titre {
+    margin-bottom: 10px;
+}
+
+.aaaccueil-navigation-notification > .aaaccueil-notification-titre > .glyphicon {
+    margin-right: 5px;
+}
+
+.aaaccueil-navigation-notification > .aaaccueil-notification-description {
+    text-align: justify;
+    font-size: 12px;
+    font-style: italic;
+}

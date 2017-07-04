@@ -64,9 +64,9 @@
                                         Aujourd'hui
                                     {% else %}
                                         {% if ("now"|date("Y") == date|date("Y")) %}
-                                            {{ date|date("l d F") }}
+                                            {{ date|localizeddate('none', 'none', 'fr_FR', null, 'cccc d LLLL') }}
                                         {% else %}
-                                            {{ date|date("l d F Y") }}
+                                            {{ date|localizeddate('none', 'none', 'fr_FR', null, 'cccc d LLLL yyyy') }}
                                         {% endif %}
                                     {% endif %}
                                 </h3>

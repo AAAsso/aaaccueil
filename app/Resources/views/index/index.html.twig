@@ -23,7 +23,7 @@
                         {% if (app.session.get('estConnecte') or annonce.estPublic) %}
                             <div class="aaa-annonce">
                                 <h4>{{ annonce.titre }} <a href="" data-toggle="modal" data-target="#modal-annonce-{{ annonce.slug }}"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
-                                <small>Le {{ annonce.datePublication|date('d F Y - H:i') }} par {{ annonce.createur.pseudo }}</small>
+                                <small>Le {{ annonce.datePublication|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL yyyy - hh:mm') }} par {{ annonce.createur.pseudo }}</small>
                                 <p>{{ annonce.contenu }}</p>
                             </div>
                         {% endif %}

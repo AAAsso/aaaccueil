@@ -3,6 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('css/index/index.html.css') }}" />{% endblock %}
+{% block javascripts %}<script type="text/javascript" src="{{ asset('js/index/index.html.js') }}"></script>{% endblock %}
 
 {% block body %}
     <div class="col-md-12">
@@ -47,38 +48,40 @@
                 <h3 class="panel-title">Calendrier</h3>
             </div>
             <div class="panel-body">
-                <div class="col-md-6">
-                    <span class="glyphicon glyphicon-warning-sign"></span> Work in progress
-                </div>
-                <div class="col-md-6">
-                    <h2>Événements ÀAA venir</h2>
-                    <div id="aaa-evenements-a-venir">
-                        {% if (evenements_tries == null) %}
-                            <h3>Nous sommes désolé.e.s, rien ne semble prévu pour l'instant.</h3>
-                        {% endif %}
-                        {% for date, evenements in evenements_tries %}
-                            <h3>
-                                {% if ("now"|date("l d F Y") == date|date("l d F Y")) %}
-                                    Aujourd'hui
-                                {% else %}
-                                    {% if ("now"|date("Y") == date|date("Y")) %}
-                                        {{ date|date("l d F") }}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="calendar"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Événements ÀAA venir</h2>
+                        <div id="aaa-evenements-a-venir">
+                            {% if (evenements_tries == null) %}
+                                <h3>Nous sommes désolé.e.s, rien ne semble prévu pour l'instant.</h3>
+                            {% endif %}
+                            {% for date, evenements in evenements_tries %}
+                                <h3>
+                                    {% if ("now"|date("l d F Y") == date|date("l d F Y")) %}
+                                        Aujourd'hui
                                     {% else %}
-                                        {{ date|date("l d F Y") }}
+                                        {% if ("now"|date("Y") == date|date("Y")) %}
+                                            {{ date|date("l d F") }}
+                                        {% else %}
+                                            {{ date|date("l d F Y") }}
+                                        {% endif %}
                                     {% endif %}
-                                {% endif %}
-                            </h3>
-                            {% for evenement in evenements %}
-                                {% if (app.session.get('estConnecte') or evenement.estPublic) %}
-                                    <p>
-                                        {{ evenement.label }}
-                                        <a href="" data-toggle="modal" data-target="#modal-evenement-{{ evenement.slug }}">
-                                            <span class="glyphicon glyphicon-info-sign"></span>
-                                        </a>
-                                    </p>
-                                {% endif %}
+                                </h3>
+                                {% for evenement in evenements %}
+                                    {% if (app.session.get('estConnecte') or evenement.estPublic) %}
+                                        <p>
+                                            {{ evenement.label }}
+                                            <a href="" data-toggle="modal" data-target="#modal-evenement-{{ evenement.slug }}">
+                                                <span class="glyphicon glyphicon-info-sign"></span>
+                                            </a>
+                                        </p>
+                                    {% endif %}
+                                {% endfor %}
                             {% endfor %}
-                        {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -115,8 +118,8 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">{{ evenement.label }}</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">{{ evenement.label }}</h4>
                         </div>
                         <div class="modal-body">
                             {{ evenement.description }}
@@ -131,5 +134,24 @@
                 </div>
             </div>
         {% endfor %}
+    </div>
+    <div id="aaa-calendar-modals">
+        <div class="modal fade" id="calendar-events-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
+                        <h4 id="calendar-events-modal-title" class="modal-title"></h4>
+                    </div>
+                    <div id="calendar-events-modal-description" class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        {% if (app.session.get('estConnecte')) %}
+                            <a id="calendar-events-modal-bouton-edition" class="btn btn-primary" href="">Éditer l'événement</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

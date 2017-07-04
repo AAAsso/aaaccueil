@@ -21,6 +21,16 @@ class EvenementRepository extends \Doctrine\ORM\EntityRepository
             ->setMaxResults(10)->getResult();
     }
 
+    public function findPublicOnes()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT e FROM AppBundle:Evenement e '
+                . 'WHERE e.estPublic = true '
+            )
+            ->getResult();
+    }
+
     public function findComingAndPublicOnes()
     {
         return $this->getEntityManager()

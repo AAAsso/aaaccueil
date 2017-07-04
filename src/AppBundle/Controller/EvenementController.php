@@ -5,7 +5,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Evenement;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Evenement controller.
@@ -149,4 +153,75 @@ class EvenementController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * @Route("/ajax/detail/{slug}", name="evenement_ajax_detail")
+     * @Method("GET")
+     */
+    public function ajaxDetailAction(Request $request, Evenement $evenement)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        return new Response($evenement->getDescription());
+    }
+
+    /**
+     * @Route("/ajax/liste", name="evenement_ajax_liste")
+     * @Method("GET")
+     */
+    public function ajaxListeAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = new Session();
+
+        if ($session->get('estConnecte'))
+        {
+            $evenements = $em->getRepository('AppBundle:Evenement')->findAll();
+        }
+        else
+        {
+            $evenements = $em->getRepository('AppBundle:Evenement')->findPublicOnes();
+        }
+
+        $jsonEvenements = [];
+        $classesEvenement = [
+            'event-default',
+            'event-inverse',
+            'event-success',
+            'event-special',
+            'event-info',
+            'event-warning',
+        ];
+
+        foreach ($evenements as $evenement)
+        {
+            $dateDebutMillisecondes = strtotime(date_format($evenement->getDateDebut(), 'd-m-Y H:i:s')) * 1000;
+            $dateFinMillisecondes = strtotime(date_format($evenement->getDateFin(), 'd-m-Y H:i:s')) * 1000;
+
+            if ($session->get('estConnecte'))
+            {
+                $editionUrl = $this->generateUrl('evenement_detail', ['slug' => $evenement->getSlug()]);
+            }
+            else
+            {
+                $editionUrl = '';
+            }
+
+            $jsonEvenements[] = [
+                'id' => $evenement->getId(),
+                'title' => $evenement->getLabel(),
+                'url' => $this->generateUrl('evenement_ajax_detail', ['slug' => $evenement->getSlug()]),
+                'url_edition' => $editionUrl,
+                'class' => $classesEvenement[array_rand($classesEvenement)],
+                'start' => $dateDebutMillisecondes,
+                'end' => $dateFinMillisecondes,
+            ];
+        }
+
+        return new JsonResponse([
+            "success" => 1,
+            'result' => $jsonEvenements,
+        ]);
+    }
+
 }

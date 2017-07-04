@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Annonce;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Annonce controller.
@@ -54,9 +56,10 @@ class AnnonceController extends Controller
         $form->handleRequest($request);
 
         $annonce->setDateCreation(new \DateTime());
-        // TODO:
-        // Remplacer l'id 2 par l'id de l'utilisateur connecté
-        $createur = $em->getRepository('AppBundle:Utilisateur')->find(2);
+
+        $session = new Session();
+        $utilisateurConnecte = $session->get('utilisateur');
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find($utilisateurConnecte->getId());
         $annonce->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {

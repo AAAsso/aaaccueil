@@ -18,7 +18,9 @@ class MainController extends Controller
         $session = new Session();
         $em = $this->getDoctrine()->getManager();
 
+        // TODO  : Faire la même chose pour les annonces que pour les évents
         $annonces = $em->getRepository('AppBundle:Annonce')->findPublicatedOnes();
+
         if ($session->get('estConnecte'))
         {
             $evenements = $em->getRepository('AppBundle:Evenement')->findComingOnes();

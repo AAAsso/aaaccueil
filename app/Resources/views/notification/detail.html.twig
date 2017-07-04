@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <th>Datecreation</th>
-                <td>{% if notification.dateCreation %}{{ notification.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if notification.dateCreation %}{{ notification.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y à H:mm') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Estpublic</th>

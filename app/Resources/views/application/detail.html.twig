@@ -17,7 +17,7 @@
             <dt>Slug</dt>
             <dd>{{ application.slug }}</dd>
             <dt>A été créé le</dt>
-            <dd>{% if application.dateCreation %}{{ application.dateCreation|date('d F Y à H:i') }}{% endif %}</dd>
+            <dd>{% if application.dateCreation %}{{ application.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y à H:mm') }}{% endif %}</dd>
         </dl>
 
         <dl class="dl-horizontal">

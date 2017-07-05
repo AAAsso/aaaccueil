@@ -31,7 +31,7 @@ class SecurityController extends Controller
             {
                 // Ajout de message d'alerte
                 $session->getFlashBag()->add(
-                        'success', 'Bienvienue '.$utilisateur->getPseudo()
+                        'success', 'Bienvenue '.$utilisateur->getPseudo()
                 );
 
                 $session->set('estConnecte', true);

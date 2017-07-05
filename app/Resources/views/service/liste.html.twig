@@ -1,0 +1,78 @@
+    {% extends 'base.html.twig' %}
+
+    {% block body %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li class="active">Services</li>
+        </ol>
+        <h1>Services</h1>
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('service_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Publier une nouvelle/un nouveau service TODO</a>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-hover aaa-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Label</th>
+                    <th>Slug</th>
+                    <th>Url</th>
+                    <th>Datecreation</th>
+                    <th>Estsuraccueil</th>                    <th class="aaa-action"></th>
+                    <th class="aaa-action"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr>
+                    <td><a href="{{ path('service_detail', { 'id': service.id }) }}">{{ service.id }}</a></td>
+                    <td>{{ service.label }}</td>
+                    <td>{{ service.slug }}</td>
+                    <td>{{ service.url }}</td>
+                    <td>{% if service.dateCreation %}{{ service.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if service.estSurAccueil %}Yes{% else %}No{% endif %}</td>
+                    <td><a href="{{ path('service_editer', { 'id': service.id }) }}" class="btn btn-default" title="Éditer l'service"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-service-id" title="Supprimer l'service"><span class="glyphicon glyphicon-trash"></span></button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6"></div>
+        <div class="col-md-6 text-right">
+            <a href="{{ path('service_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Publier une nouvelle/un nouveau service TODO</a>
+        </div>        <div id="modals-confirmation-suppression">
+            {% for service in services %}
+            {% set form_supprimer = forms_supprimer[service.id] %}
+            <div id="modal-service-id" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Voulez-vous supprimer le/la/l' service TODO: ajouter label ?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer text-left">
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    {{ form_start(form_supprimer) }}
+                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                                    {{ form_end(form_supprimer) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            {% endfor %}
+        </div>
+        {% endblock %}

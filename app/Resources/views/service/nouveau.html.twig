@@ -1,0 +1,23 @@
+    {% extends 'base.html.twig' %}
+
+    {% block body %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li><a href="{{ path('service_liste') }}">Services</a></li>
+            <li class="active">Publier une nouvelle/un nouveau service TODO</li>
+        </ol>
+
+        <h1>Publier une nouvelle/un nouveau service TODO</h1>
+    </div>
+    <div class="col-md-12">
+        {{ form_start(form, {'attr': {'id': 'form_publier_service'}}) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('service_liste') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Annuler la publication</a>
+        <button class="btn btn-primary" form="form_publier_service"><span class="glyphicon glyphicon-ok"></span> Publier le/la/l'service TODO:vérifier</button>
+    </div>
+    {% endblock %}

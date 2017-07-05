@@ -1,0 +1,55 @@
+    {% extends 'base.html.twig' %}
+
+    {% block body %}
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="/">AAAccueil</a></li>
+            <li><a href="{{ path('monitoring_liste') }}">Monitorings</a></li>
+            <li class="active">{{ monitoring.id }} TODO: modifier "id"</li>
+        </ol>
+
+        <h1>Monitoring</h1>
+
+        <dl class="dl-horizontal">
+            <dt>Id</dt>
+            <dd>{{ monitoring.id }}</dd>
+            <dt>Label</dt>
+            <dd>{{ monitoring.label }}</dd>
+            <dt>Slug</dt>
+            <dd>{{ monitoring.slug }}</dd>
+            <dt>Description</dt>
+            <dd>{{ monitoring.description }}</dd>
+            <dt>Datecreation</dt>
+            <dd>{% if monitoring.dateCreation %}{{ monitoring.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</dd>        </dl>
+    </div>
+        <div class="col-md-6">
+    <button class="btn btn-danger" data-toggle="modal" data-target="#modal-monitoring-id"><span class="glyphicon glyphicon-trash"></span> Supprimer le monitoring TODO : vérifier (le/la/l')</button>
+</div><div class="col-md-6 text-right">
+    <a href="{{ path('monitoring_editer', { 'id': monitoring.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Éditer monitoring</a>
+</div<div id="modal-confirmation-suppression">
+    <div id="modal-monitoring-id" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>Voulez-vous supprimer le monitoring TODO: ajouter label ?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer text-left">
+                    <div class="row">
+                        <div class="col-md-6 text-left">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            {{ form_start(form_supprimer) }}
+                            <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                            {{ form_end(form_supprimer) }}
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>{% endblock %}

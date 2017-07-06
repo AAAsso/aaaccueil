@@ -62,24 +62,31 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-principale-top">
                 <ul class="nav navbar-nav">
+                    <!-- Menu déroulant des Annonces -->
+                    {% if app.session.get('estConnecte') %}
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAnonces <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAnnonces <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li class="text-center"><a href="{{ path('annonce_nouveau') }}" class="btn btn-default">Créer</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="text-center"><a href="{{ path('annonce_liste') }}">Voir toutes</a></li>
                         </ul>
                     </li>
+                    {% endif %}
+                    <!-- Menu déroulant des Applications -->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">AAAplications <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             {{ render(controller('AppBundle:Application:navbar')) }}
+                            {% if app.session.get('estConnecte') %}
                             <li role="separator" class="divider"></li>
                             <li class="text-center"><a href="{{ path('application_nouveau') }}" class="btn btn-default">Ajouter une entrée</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="text-center"><a href="{{ path('application_liste') }}">Voir toutes</a></li>
+                            {% endif %}
                         </ul>
                     </li>
+                    <!-- Menu déroulant des Projets -->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projets <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -92,6 +99,7 @@
                             <li class="text-center"><a href="#">O</a></li>
                         </ul>
                     </li>
+                    <!-- Menu déroulant du Monitoring -->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Monitoring <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -105,10 +113,10 @@
                         </ul>
                     </li>
                 </ul>
-                <!-- form login -->
                 {% if app.session.get('estConnecte') %}
                     {% set utilisateur = app.session.get('utilisateur') %}
                     <ul class="nav navbar-nav navbar-right">
+                        <!-- Bouton Calendrier -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -119,6 +127,7 @@
                                 <li class="text-center"><a href="{{ path('evenement_liste') }}">Planning</a></li>
                             </ul>
                         </li>
+                        <!-- Bouton Notification -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-bell"></span>
@@ -130,6 +139,7 @@
                                 <li class="text-center"><a href="{{ path('notification_liste') }}">Voir toutes</a></li>
                             </ul>
                         </li>
+                        <!-- Menu Utilisateur -->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <!-- TODO : Remplacer le glyphicon-user par l'avatar, si disponible -->
@@ -145,6 +155,7 @@
                         </li>
                     </ul>
                 {% else %}
+                    <!-- Formulaire de connexion -->
                     <form class="navbar-form navbar-right" method="post" action="{{ path('login') }}">
                         <div class="form-group">
                             <input type="text" class="form-control" name="login" placeholder="Identifiant ou e-mail">

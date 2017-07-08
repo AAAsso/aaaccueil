@@ -1,14 +1,16 @@
     {% extends 'base.html.twig' %}
 
+    {% block title %}Nouveau monitoring{% endblock %}
+    
     {% block body %}
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="/">AAAccueil</a></li>
             <li><a href="{{ path('monitoring_liste') }}">Monitorings</a></li>
-            <li class="active">Publier une nouvelle/un nouveau monitoring TODO</li>
+            <li class="active">Créer un nouveau monitoring</li>
         </ol>
 
-        <h1>Publier une nouvelle/un nouveau monitoring TODO</h1>
+        <h1>Créer un nouveau monitoring</h1>
     </div>
     <div class="col-md-12">
         {{ form_start(form, {'attr': {'id': 'form_publier_monitoring'}}) }}
@@ -18,6 +20,6 @@
     <div class="col-md-6"></div>
     <div class="col-md-6 text-right">
         <a href="{{ path('monitoring_liste') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Annuler la publication</a>
-        <button class="btn btn-primary" form="form_publier_monitoring"><span class="glyphicon glyphicon-ok"></span> Publier le/la/l'monitoring TODO:vérifier</button>
+        <button class="btn btn-primary" form="form_publier_monitoring"><span class="glyphicon glyphicon-ok"></span> Créer le monitoring </button>
     </div>
     {% endblock %}

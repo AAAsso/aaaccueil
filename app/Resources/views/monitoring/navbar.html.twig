@@ -1,0 +1,7 @@
+{% for monitoring in monitorings %}
+    {% if (app.session.get('estConnecte') or monitoring.estPublic) %}
+        <li class="text-center">
+            <a href="{{ path('monitoring_detail', {'slug': monitoring.slug}) }}">{{ monitoring.label }}</a>
+        </li>
+    {% endif %}
+{% endfor %}

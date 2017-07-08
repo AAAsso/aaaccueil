@@ -22,12 +22,14 @@
             <dt>Datecreation</dt>
             <dd>{% if service.dateCreation %}{{ service.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</dd>
             <dt>Estsuraccueil</dt>
-            <dd>{% if service.estSurAccueil %}Yes{% else %}No{% endif %}</dd>        </dl>
+            <dd>{% if service.estSurAccueil %}Yes{% else %}No{% endif %}</dd>
+            <dt>Estpublic</dt>
+            <dd>{% if service.estPublic %}Yes{% else %}No{% endif %}</dd>        </dl>
     </div>
         <div class="col-md-6">
     <button class="btn btn-danger" data-toggle="modal" data-target="#modal-service-id"><span class="glyphicon glyphicon-trash"></span> Supprimer le service TODO : vérifier (le/la/l')</button>
 </div><div class="col-md-6 text-right">
-    <a href="{{ path('service_editer', { 'id': service.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Éditer service</a>
+    <a href="{{ path('service_editer', { 'slug': service.slug }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Éditer service</a>
 </div<div id="modal-confirmation-suppression">
     <div id="modal-service-id" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

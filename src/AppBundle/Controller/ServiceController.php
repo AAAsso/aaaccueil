@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Service;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Service controller.
@@ -47,16 +49,25 @@ class ServiceController extends Controller
      */
     public function nouveauAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $service = new Service();
         $form = $this->createForm('AppBundle\Form\ServiceType', $service);
         $form->handleRequest($request);
+
+        $service->setDateCreation(new \DateTime());
+
+        $session = new Session();
+        $utilisateurConnecte = $session->get('utilisateur');
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find($utilisateurConnecte->getId());
+        $service->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($service);
             $em->flush();
 
-            return $this->redirectToRoute('service_detail', array('id' => $service->getId()));
+            return $this->redirectToRoute('service_detail', array('slug' => $service->getSlug()));
         }
 
         return $this->render('service/nouveau.html.twig', array(
@@ -68,7 +79,7 @@ class ServiceController extends Controller
     /**
      * Finds and displays a service entity.
      *
-     * @Route("/{id}", name="service_detail")
+     * @Route("/{slug}", name="service_detail")
      * @Method("GET")
      */
     public function detailAction(Service $service)
@@ -84,7 +95,7 @@ class ServiceController extends Controller
     /**
      * Displays a form to editer an existing service entity.
      *
-     * @Route("/editer/{id}", name="service_editer")
+     * @Route("/editer/{slug}", name="service_editer")
      * @Method({"GET", "POST"})
      */
     public function editerAction(Request $request, Service $service)
@@ -96,7 +107,7 @@ class ServiceController extends Controller
         if ($formEditer->isSubmitted() && $formEditer->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('service_detail', array('id' => $service->getId()));
+            return $this->redirectToRoute('service_detail', array('slug' => $service->getSlug()));
         }
 
         return $this->render('service/editer.html.twig', array(
@@ -109,7 +120,7 @@ class ServiceController extends Controller
     /**
      * Deletes a service entity.
      *
-     * @Route("/supprimer/{id}", name="service_supprimer")
+     * @Route("/supprimer/{slug}", name="service_supprimer")
      * @Method("DELETE")
      */
     public function supprimerAction(Request $request, Service $service)
@@ -136,7 +147,7 @@ class ServiceController extends Controller
     private function creerFormSupprimer(Service $service)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('service_supprimer', array('id' => $service->getId())))
+            ->setAction($this->generateUrl('service_supprimer', array('slug' => $service->getSlug())))
             ->setMethod('DELETE')
             ->getForm()
         ;

@@ -21,20 +21,23 @@
                     <th>Slug</th>
                     <th>Url</th>
                     <th>Datecreation</th>
-                    <th>Estsuraccueil</th>                    <th class="aaa-action"></th>
+                    <th>Estsuraccueil</th>
+                    <th>Estpublic</th>
+                    <th class="aaa-action"></th>
                     <th class="aaa-action"></th>
                 </tr>
             </thead>
             <tbody>
                 {% for service in services %}
                 <tr>
-                    <td><a href="{{ path('service_detail', { 'id': service.id }) }}">{{ service.id }}</a></td>
+                    <td><a href="{{ path('service_detail', { 'slug': service.slug }) }}">{{ service.id }}</a></td>
                     <td>{{ service.label }}</td>
                     <td>{{ service.slug }}</td>
                     <td>{{ service.url }}</td>
                     <td>{% if service.dateCreation %}{{ service.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>{% if service.estSurAccueil %}Yes{% else %}No{% endif %}</td>
-                    <td><a href="{{ path('service_editer', { 'id': service.id }) }}" class="btn btn-default" title="Éditer l'service"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td>{% if service.estPublic %}Yes{% else %}No{% endif %}</td>
+                    <td><a href="{{ path('service_editer', { 'slug': service.slug }) }}" class="btn btn-default" title="Éditer l'service"><span class="glyphicon glyphicon-edit"></span></a></td>
                     <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-service-id" title="Supprimer l'service"><span class="glyphicon glyphicon-trash"></span></button></td>
                 </tr>
                 {% endfor %}

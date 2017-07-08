@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Monitoring;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Monitoring controller.
@@ -40,6 +42,20 @@ class MonitoringController extends Controller
     }
 
     /**
+     * Permet de lister les monitorings à afficher dans la navbar
+     */
+    public function navbarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $monitorings = $em->getRepository('AppBundle:Monitoring')->findAll();
+
+        return $this->render('monitoring/navbar.html.twig', [
+            'monitorings' => $monitorings,
+        ]);
+    }
+
+    /**
      * Creates a new monitoring entity.
      *
      * @Route("/nouveau", name="monitoring_nouveau")
@@ -47,16 +63,25 @@ class MonitoringController extends Controller
      */
     public function nouveauAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $monitoring = new Monitoring();
         $form = $this->createForm('AppBundle\Form\MonitoringType', $monitoring);
         $form->handleRequest($request);
+
+        $monitoring->setDateCreation(new \DateTime());
+
+        $session = new Session();
+        $utilisateurConnecte = $session->get('utilisateur');
+        $createur = $em->getRepository('AppBundle:Utilisateur')->find($utilisateurConnecte->getId());
+        $monitoring->setCreateur($createur);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($monitoring);
             $em->flush();
 
-            return $this->redirectToRoute('monitoring_detail', array('id' => $monitoring->getId()));
+            return $this->redirectToRoute('monitoring_detail', array('slug' => $monitoring->getSlug()));
         }
 
         return $this->render('monitoring/nouveau.html.twig', array(
@@ -68,7 +93,7 @@ class MonitoringController extends Controller
     /**
      * Finds and displays a monitoring entity.
      *
-     * @Route("/{id}", name="monitoring_detail")
+     * @Route("/{slug}", name="monitoring_detail")
      * @Method("GET")
      */
     public function detailAction(Monitoring $monitoring)
@@ -84,7 +109,7 @@ class MonitoringController extends Controller
     /**
      * Displays a form to editer an existing monitoring entity.
      *
-     * @Route("/editer/{id}", name="monitoring_editer")
+     * @Route("/editer/{slug}", name="monitoring_editer")
      * @Method({"GET", "POST"})
      */
     public function editerAction(Request $request, Monitoring $monitoring)
@@ -96,7 +121,7 @@ class MonitoringController extends Controller
         if ($formEditer->isSubmitted() && $formEditer->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('monitoring_detail', array('id' => $monitoring->getId()));
+            return $this->redirectToRoute('monitoring_detail', array('slug' => $monitoring->getSlug()));
         }
 
         return $this->render('monitoring/editer.html.twig', array(
@@ -109,7 +134,7 @@ class MonitoringController extends Controller
     /**
      * Deletes a monitoring entity.
      *
-     * @Route("/supprimer/{id}", name="monitoring_supprimer")
+     * @Route("/supprimer/{slug}", name="monitoring_supprimer")
      * @Method("DELETE")
      */
     public function supprimerAction(Request $request, Monitoring $monitoring)
@@ -136,7 +161,7 @@ class MonitoringController extends Controller
     private function creerFormSupprimer(Monitoring $monitoring)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('monitoring_supprimer', array('id' => $monitoring->getId())))
+            ->setAction($this->generateUrl('monitoring_supprimer', array('slug' => $monitoring->getSlug())))
             ->setMethod('DELETE')
             ->getForm()
         ;

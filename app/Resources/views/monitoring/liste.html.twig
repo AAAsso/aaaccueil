@@ -20,19 +20,22 @@
                     <th>Label</th>
                     <th>Slug</th>
                     <th>Description</th>
-                    <th>Datecreation</th>                    <th class="aaa-action"></th>
+                    <th>Datecreation</th>
+                    <th>Estpublic</th>
+                    <th class="aaa-action"></th>
                     <th class="aaa-action"></th>
                 </tr>
             </thead>
             <tbody>
                 {% for monitoring in monitorings %}
                 <tr>
-                    <td><a href="{{ path('monitoring_detail', { 'id': monitoring.id }) }}">{{ monitoring.id }}</a></td>
+                    <td><a href="{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}">{{ monitoring.id }}</a></td>
                     <td>{{ monitoring.label }}</td>
                     <td>{{ monitoring.slug }}</td>
                     <td>{{ monitoring.description }}</td>
                     <td>{% if monitoring.dateCreation %}{{ monitoring.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td><a href="{{ path('monitoring_editer', { 'id': monitoring.id }) }}" class="btn btn-default" title="Éditer l'monitoring"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td>{% if monitoring.estPublic %}Yes{% else %}No{% endif %}</td>
+                    <td><a href="{{ path('monitoring_editer', { 'slug': monitoring.slug }) }}" class="btn btn-default" title="Éditer l'monitoring"><span class="glyphicon glyphicon-edit"></span></a></td>
                     <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-monitoring-id" title="Supprimer l'monitoring"><span class="glyphicon glyphicon-trash"></span></button></td>
                 </tr>
                 {% endfor %}

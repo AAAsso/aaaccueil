@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Utilisateur;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Monitoring
@@ -31,6 +33,7 @@ class Monitoring
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"label"}, updatable=false)
      * @ORM\Column(name="slug", type="string", length=500, unique=true)
      */
     private $slug;
@@ -48,6 +51,36 @@ class Monitoring
      * @ORM\Column(name="dateCreation", type="datetime")
      */
     private $dateCreation;
+
+    /**
+     * @var Application
+     *
+     * @ORM\ManyToOne(targetEntity="Application")
+     * @ORM\JoinColumn(name="application_id", referencedColumnName="id")
+     */
+    private $application;
+
+    /**
+     * @var Service[]
+     *
+     * @ORM\OneToMany(targetEntity="Service", mappedBy="monitoring")
+     */
+    private $services;
+
+    /**
+     * @var Utilisateur
+     *
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
+     * @ORM\JoinColumn(name="createur_id", referencedColumnName="id")
+     */
+    private $createur;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="est_public", type="boolean")
+     */
+    private $estPublic;
 
 
     /**
@@ -154,5 +187,115 @@ class Monitoring
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * Add a service to the services
+     *
+     * @param Service $service
+     *
+     * @return Monitoring
+     */
+    public function addServices($service)
+    {
+        $this->services[] = $service;
+
+        return $this;
+    }
+
+    /**
+     * Set services
+     *
+     * @param Service[] $services
+     *
+     * @return Monitoring
+     */
+    public function setServices($services)
+    {
+        $this->services = $services;
+
+        return $this;
+    }
+
+    /**
+     * Get services
+     *
+     * @return Services
+     */
+    public function getServices()
+    {
+        return $this->services;
+    }
+
+    /**
+     * Set application
+     *
+     * @param Utilisateur $application
+     *
+     * @return Service
+     */
+    public function setApplication($application)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Get application
+     *
+     * @return Utilisateur
+     */
+    public function getApplication()
+    {
+        return $this->application;
+    }
+
+    /**
+     * Set createur
+     *
+     * @param Utilisateur $createur
+     *
+     * @return Service
+     */
+    public function setCreateur($createur)
+    {
+        $this->createur = $createur;
+
+        return $this;
+    }
+
+    /**
+     * Get createur
+     *
+     * @return Utilisateur
+     */
+    public function getCreateur()
+    {
+        return $this->createur;
+    }
+
+    /**
+     * Get estPublic
+     *
+     * @return boolean
+     */
+    public function getEstPublic()
+    {
+        return $this->estPublic;
+    }
+
+    /**
+     * Set estPublic
+     *
+     * @param boolean $estPublic
+     *
+     * @return Service
+     */
+    public function setEstPublic($estPublic)
+    {
+        $this->estPublic = $estPublic;
+
+        return $this;
     }
 }

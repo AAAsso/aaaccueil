@@ -20,12 +20,14 @@
             <dt>Description</dt>
             <dd>{{ monitoring.description }}</dd>
             <dt>Datecreation</dt>
-            <dd>{% if monitoring.dateCreation %}{{ monitoring.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</dd>        </dl>
+            <dd>{% if monitoring.dateCreation %}{{ monitoring.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</dd>
+            <dt>Estpublic</dt>
+            <dd>{% if monitoring.estPublic %}Yes{% else %}No{% endif %}</dd>        </dl>
     </div>
         <div class="col-md-6">
     <button class="btn btn-danger" data-toggle="modal" data-target="#modal-monitoring-id"><span class="glyphicon glyphicon-trash"></span> Supprimer le monitoring TODO : vérifier (le/la/l')</button>
 </div><div class="col-md-6 text-right">
-    <a href="{{ path('monitoring_editer', { 'id': monitoring.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Éditer monitoring</a>
+    <a href="{{ path('monitoring_editer', { 'slug': monitoring.slug }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Éditer monitoring</a>
 </div<div id="modal-confirmation-suppression">
     <div id="modal-monitoring-id" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

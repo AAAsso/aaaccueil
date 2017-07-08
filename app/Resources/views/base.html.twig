@@ -104,8 +104,12 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Monitoring <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             {{ render(controller('AppBundle:Monitoring:navbar')) }}
+                            {% if app.session.get('estConnecte') %}
                             <li role="separator" class="divider"></li>
-                            <li class="text-center"><a href="#">TODO créer et voir tous</a></li>
+                            <li class="text-center"><a href="{{ path('monitoring_nouveau') }}" class="btn btn-default">Créer</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="text-center"><a href="{{ path('monitoring_liste') }}">Voir tous</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                 </ul>

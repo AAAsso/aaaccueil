@@ -1,5 +1,7 @@
     {% extends 'base.html.twig' %}
 
+    {% block title %}Monitoring{% endblock %}
+    
     {% block body %}
     <div class="col-md-12">
         <ol class="breadcrumb">
@@ -10,33 +12,39 @@
     </div>
     <div class="col-md-6"></div>
     <div class="col-md-6 text-right">
-        <a href="{{ path('monitoring_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Publier une nouvelle/un nouveau monitoring TODO</a>
+        <a href="{{ path('monitoring_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Créer un nouveau monitoring </a>
     </div>
     <div class="col-md-12">
         <table class="table table-hover aaa-table">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Label</th>
-                    <th>Slug</th>
-                    <th>Description</th>
-                    <th>Datecreation</th>
-                    <th>Estpublic</th>
+                    <th class="aaa-id">Id</th>
+                    <th style="width: 14%">Slug</th>
+                    <th style="width: 18%">Titre</th>
+                    <th style="width: 18%" class="aaa-date">Création</th>
+                    <th style="width: 36%">Description</th>
+                    <th style="width: 14%" class="aaa-icon">Visibilité</th>
                     <th class="aaa-action"></th>
                     <th class="aaa-action"></th>
                 </tr>
             </thead>
             <tbody>
                 {% for monitoring in monitorings %}
-                <tr>
-                    <td><a href="{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}">{{ monitoring.id }}</a></td>
-                    <td>{{ monitoring.label }}</td>
-                    <td>{{ monitoring.slug }}</td>
-                    <td>{{ monitoring.description }}</td>
-                    <td>{% if monitoring.dateCreation %}{{ monitoring.dateCreation|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td>{% if monitoring.estPublic %}Yes{% else %}No{% endif %}</td>
-                    <td><a href="{{ path('monitoring_editer', { 'slug': monitoring.slug }) }}" class="btn btn-default" title="Éditer l'monitoring"><span class="glyphicon glyphicon-edit"></span></a></td>
-                    <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-monitoring-id" title="Supprimer l'monitoring"><span class="glyphicon glyphicon-trash"></span></button></td>
+                <tr class="aaa-row-clickable">
+                    <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';">{{ monitoring.id }}</td>
+                    <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';" class="ellipsis" title="{{ monitoring.slug }}">{{ monitoring.slug }}</td>
+                    <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';" class="ellipsis" title="{{ monitoring.label }}">{{ monitoring.label }}</td>
+                    <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';" class="aaa-date">{% if monitoring.dateCreation %}{{ monitoring.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}<br />{{ monitoring.dateCreation|date('H:i') }}{% endif %}</td>
+                    <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';" class="ellipsis" title="{{ monitoring.description }}">{{ monitoring.description }}</td>
+                    <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';" class="aaa-icon">
+                            {% if monitoring.estPublic %}
+                                <span class="glyphicon glyphicon-user" title="Publique"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-lock" title="Privée"></span>
+                            {% endif %}
+                        </td>
+                    <td><a href="{{ path('monitoring_editer', { 'slug': monitoring.slug }) }}" class="btn btn-default" title="Éditer le monitoring"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-monitoring-id" title="Supprimer le monitoring"><span class="glyphicon glyphicon-trash"></span></button></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -45,35 +53,36 @@
 
     <div class="col-md-6"></div>
         <div class="col-md-6 text-right">
-            <a href="{{ path('monitoring_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Publier une nouvelle/un nouveau monitoring TODO</a>
-        </div>        <div id="modals-confirmation-suppression">
+            <a href="{{ path('monitoring_nouveau') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Créer un nouveau monitoring </a>
+        </div>        
+        <div id="modals-confirmation-suppression">
             {% for monitoring in monitorings %}
-            {% set form_supprimer = forms_supprimer[monitoring.id] %}
-            <div id="modal-monitoring-id" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>Voulez-vous supprimer le/la/l' monitoring TODO: ajouter label ?</p>
+                {% set form_supprimer = forms_supprimer[monitoring.id] %}
+                <div id="modal-monitoring-id" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p>Voulez-vous supprimer ce monitoring ?</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer text-left">
-                            <div class="row">
-                                <div class="col-md-6 text-left">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    {{ form_start(form_supprimer) }}
-                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
-                                    {{ form_end(form_supprimer) }}
+                            <div class="modal-footer text-left">
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        {{ form_start(form_supprimer) }}
+                                        <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression</button>
+                                        {{ form_end(form_supprimer) }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
             {% endfor %}
         </div>
         {% endblock %}

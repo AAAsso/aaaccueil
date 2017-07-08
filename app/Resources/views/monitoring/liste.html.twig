@@ -19,11 +19,12 @@
             <thead>
                 <tr>
                     <th class="aaa-id">Id</th>
-                    <th style="width: 14%">Slug</th>
+                    <th style="width: 10%">Slug</th>
                     <th style="width: 18%">Titre</th>
-                    <th style="width: 18%" class="aaa-date">Création</th>
-                    <th style="width: 36%">Description</th>
-                    <th style="width: 14%" class="aaa-icon">Visibilité</th>
+                    <th style="width: 14%">Auteur</th>
+                    <th style="width: 14%" class="aaa-date">Création</th>
+                    <th style="width: 34%">Description</th>
+                    <th style="width: 10%" class="aaa-icon">Visibilité</th>
                     <th class="aaa-action"></th>
                     <th class="aaa-action"></th>
                 </tr>
@@ -34,6 +35,7 @@
                     <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';">{{ monitoring.id }}</td>
                     <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';" class="ellipsis" title="{{ monitoring.slug }}">{{ monitoring.slug }}</td>
                     <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';" class="ellipsis" title="{{ monitoring.label }}">{{ monitoring.label }}</td>
+                    <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';">{{ monitoring.createur.pseudo }}</td>
                     <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';" class="aaa-date">{% if monitoring.dateCreation %}{{ monitoring.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}<br />{{ monitoring.dateCreation|date('H:i') }}{% endif %}</td>
                     <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';" class="ellipsis" title="{{ monitoring.description }}">{{ monitoring.description }}</td>
                     <td onclick="window.document.location = '{{ path('monitoring_detail', { 'slug': monitoring.slug }) }}';" class="aaa-icon">

@@ -103,13 +103,13 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Monitoring <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li class="text-center"><a href="#">T</a></li>
+                            <li class="text-center"><a href="#">Liste des applis</a></li>
+                            {% if app.session.get('estConnecte') %}
                             <li role="separator" class="divider"></li>
-                            <li class="text-center"><a href="#">O</a></li>
+                            <li class="text-center"><a href="{{ path('monitoring_nouveau') }}" class="btn btn-default">Créer</a></li>
                             <li role="separator" class="divider"></li>
-                            <li class="text-center"><a href="#">D</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="text-center"><a href="#">O</a></li>
+                            <li class="text-center"><a href="{{ path('monitoring_liste') }}">Voir tous</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                 </ul>

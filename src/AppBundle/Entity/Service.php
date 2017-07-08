@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\Utilisateur;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Service
@@ -31,6 +33,7 @@ class Service
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"label"}, updatable=false)
      * @ORM\Column(name="slug", type="string", length=500, unique=true)
      */
     private $slug;
@@ -56,6 +59,28 @@ class Service
      */
     private $estSurAccueil;
 
+    /**
+     * @var Monitoring
+     *
+     * @ORM\ManyToOne(targetEntity="Monitoring", inversedBy="services")
+     * @ORM\JoinColumn(name="monitoring_id", referencedColumnName="id")
+     */
+    private $monitoring;
+
+    /**
+     * @var Utilisateur
+     *
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
+     * @ORM\JoinColumn(name="createur_id", referencedColumnName="id")
+     */
+    private $createur;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="est_public", type="boolean")
+     */
+    private $estPublic;
 
     /**
      * Get id
@@ -185,5 +210,77 @@ class Service
     public function getEstSurAccueil()
     {
         return $this->estSurAccueil;
+    }
+
+    /**
+     * Set monitoring
+     *
+     * @param Monitoring $monitoring
+     *
+     * @return Service
+     */
+    public function setMonitoring($monitoring)
+    {
+        $this->monitoring = $monitoring;
+
+        return $this;
+    }
+
+    /**
+     * Get monitoring
+     *
+     * @return Monitoring
+     */
+    public function getMonitoring()
+    {
+        return $this->monitoring;
+    }
+
+    /**
+     * Set createur
+     *
+     * @param Utilisateur $createur
+     *
+     * @return Service
+     */
+    public function setCreateur($createur)
+    {
+        $this->createur = $createur;
+
+        return $this;
+    }
+
+    /**
+     * Get createur
+     *
+     * @return Utilisateur
+     */
+    public function getCreateur()
+    {
+        return $this->createur;
+    }
+
+    /**
+     * Get estPublic
+     *
+     * @return boolean
+     */
+    public function getEstPublic()
+    {
+        return $this->estPublic;
+    }
+
+    /**
+     * Set estPublic
+     *
+     * @param boolean $estPublic
+     *
+     * @return Service
+     */
+    public function setEstPublic($estPublic)
+    {
+        $this->estPublic = $estPublic;
+
+        return $this;
     }
 }

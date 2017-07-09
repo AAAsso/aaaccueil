@@ -1,8 +1,8 @@
-    {% extends 'base.html.twig' %}
-    
+{% extends 'base.html.twig' %}
+
 {% block title %}{{ monitoring.label }}{% endblock %}
-    
-    {% block body %}
+
+{% block body %}
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="/">AAAccueil</a></li>
@@ -33,34 +33,38 @@
             <dd>{% if monitoring.estPublic %}Publique{% else %}Privée{% endif %}</dd>
         </dl>
     </div>
-        <div class="col-md-6">
-    <button class="btn btn-danger" data-toggle="modal" data-target="#modal-monitoring-id"><span class="glyphicon glyphicon-trash"></span> Supprimer ce monitoring </button>
-</div><div class="col-md-6 text-right">
-    <a href="{{ path('monitoring_editer', { 'slug': monitoring.slug }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Éditer ce monitoring</a>
-</div<div id="modal-confirmation-suppression">
-    <div id="modal-monitoring-id" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p>Voulez-vous supprimer le monitoring {{ monitoring.label }} ?</p>
+    <div class="col-md-6">
+        <button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ monitoring.slug }}"><span class="glyphicon glyphicon-trash"></span> Supprimer ce monitoring </button>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ path('monitoring_editer', { 'slug': monitoring.slug }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Éditer ce monitoring</a>
+    </div>
+    
+    <div id="modal-confirmation-suppression">
+        <div id="modal-{{ monitoring.slug }}" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Voulez-vous supprimer le monitoring {{ monitoring.label }} ?</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer text-left">
-                    <div class="row">
-                        <div class="col-md-6 text-left">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            {{ form_start(form_supprimer) }}
-                            <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression </button>
-                            {{ form_end(form_supprimer) }}
+                    <div class="modal-footer text-left">
+                        <div class="row">
+                            <div class="col-md-6 text-left">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</button>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                {{ form_start(form_supprimer) }}
+                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Confirmer la suppression </button>
+                                {{ form_end(form_supprimer) }}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-</div>{% endblock %}
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+{% endblock %}

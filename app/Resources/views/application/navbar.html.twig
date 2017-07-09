@@ -4,7 +4,7 @@
             <p>
                 <a href="{{ path('application_detail', {'slug': application.slug}) }}">{{ application.label }}</a>
                 {% if application.urlDirecte %}
-                    <a href="{{ application.urlDirecte }}"><span class="glyphicon glyphicon-link"></span></a>
+                    <a href="{{ application.urlDirecte }}" target="_blank"><span class="glyphicon glyphicon-link"></span></a>
                 {% endif %}
             </p>
         </li>

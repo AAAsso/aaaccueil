@@ -39,7 +39,7 @@
                     <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="ellipsis" title="{{ application.slug }}">{{ application.slug }}</td>
                     <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="ellipsis" title="{{ application.label }}">{{ application.label }}</td>
                     <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';">{{ application.createur.pseudo }}</td>
-                    <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="aaa-date">{% if application.dateCreation %}{{ application.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y') }}<br />{{ application.dateCreation|date('H:i') }}{% endif %}</td>
+                    <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="aaa-date">{% if application.dateCreation %}{{ application.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}<br />{{ application.dateCreation|date('H:i') }}{% endif %}</td>
                     <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="ellipsis" title="{{ application.description }}">{{ application.description }}</td>
                     <td onclick="window.document.location='{{ path('application_detail', { 'slug': application.slug }) }}';" class="ellipsis" title="{{ application.urlDirecte }}">
                         {% if application.urlDirecte %}

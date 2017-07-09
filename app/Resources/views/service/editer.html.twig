@@ -1,14 +1,16 @@
     {% extends 'base.html.twig' %}
 
+    {% block title %}{{ service.label }}{% endblock %}
+    
     {% block body %}
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li><a href="/">AAAccueil</a></li>
             <li><a href="{{ path('service_liste') }}">Services</a></li>
-            <li class="active">{{ service.id }} TODO: modifier "id"</li>
+            <li class="active">{{ service.label }}</li>
         </ol>
 
-        <h1>Éditer le/la/l'service TODO</h1>
+        <h1>Éditer le service</h1>
     </div>
     <div class="col-md-12">
         {{ form_start(form_editer, {'attr': {'id': 'form_editer_service'}}) }}
@@ -16,7 +18,7 @@
         {{ form_end(form_editer) }}
     </div>
         <div class="col-md-6">
-    <button class="btn btn-danger" data-toggle="modal" data-target="#modal-service-id"><span class="glyphicon glyphicon-trash"></span> Supprimer le service TODO : vérifier (le/la/l')</button>
+    <button class="btn btn-danger" data-toggle="modal" data-target="#modal-service-id"><span class="glyphicon glyphicon-trash"></span> Supprimer le service</button>
 </div><div class="col-md-6 text-right">
     <a href="{{ path('service_liste') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Annuler les modifications</a>
     <button class="btn btn-primary" form="form_editer_service"><span class="glyphicon glyphicon-ok"></span> Enregistrer les modifications</button>
@@ -27,7 +29,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <p>Voulez-vous supprimer le service TODO: ajouter label ?</p>
+                            <p>Voulez-vous supprimer le service {{service.label}}?</p>
                         </div>
                     </div>
                 </div>

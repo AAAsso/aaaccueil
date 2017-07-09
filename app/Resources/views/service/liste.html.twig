@@ -32,18 +32,18 @@
             </thead>
             <tbody>
                 {% for service in services %}
-                    <tr>
+                    <tr class="aaa-row-clickable">
                         <td onclick="window.document.location = '{{ path('service_detail', { 'slug': service.slug }) }}';">{{ service.id }}</td>
                         <td onclick="window.document.location = '{{ path('service_detail', { 'slug': service.slug }) }}';" class="ellipsis" title="{{ service.slug }}">{{ service.slug }}</td>
                         <td onclick="window.document.location = '{{ path('service_detail', { 'slug': service.slug }) }}';" class="ellipsis" title="{{ service.label }}">{{ service.label }}</td>
                         <td onclick="window.document.location = '{{ path('service_detail', { 'slug': service.slug }) }}';">{{ service.createur.pseudo }}</td>
-                        <td onclick="window.document.location = '{{ path('service_detail', { 'slug': service.slug }) }}';" class="aaa-date">{% if service.dateCreation %}{{ service.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y') }}<br />{{ service.dateCreation|date('H:i') }}{% endif %}</td>
+                        <td onclick="window.document.location = '{{ path('service_detail', { 'slug': service.slug }) }}';" class="aaa-date">{% if service.dateCreation %}{{ service.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}<br />{{ service.dateCreation|date('H:i') }}{% endif %}</td>
                         <td onclick="window.document.location = '{{ path('service_detail', { 'slug': service.slug }) }}';" class="ellipsis" title="{{ service.url }}">{{ service.url }}</td>
                         <td onclick="window.document.location = '{{ path('service_detail', { 'slug': service.slug }) }}';" class="aaa-icon">
                             {% if service.estSurAccueil %}
-                                <span class="glyphicon glyphicon-check" title="Visible sur l'accueil"></span>
+                                <span class="glyphicon glyphicon-check" title="Affiché sur l'accueil"></span>
                             {% else %}
-                                <span title="Non visible sur l'accueil">--</span>
+                                <span title="Non affiché sur l'accueil">--</span>
                             {% endif %}
                         </td>
                         <td onclick="window.document.location = '{{ path('service_detail', { 'slug': service.slug }) }}';" class="aaa-icon">

@@ -24,10 +24,10 @@
                     <th style="width: 8%">Slug</th>
                     <th style="width: 20%">Label</th>
                     <th style="width: 10%">Créateur</th>
-                    <th style="width: 10%" class="aaa-date">Création</th>
+                    <th class="aaa-date">Création</th>
                     <th style="width: 24%">Description</th>
-                    <th style="width: 10%" class="aaa-date">Débute le</th>
-                    <th style="width: 10%" class="aaa-date">Termine le</th>
+                    <th class="aaa-date">Débute le</th>
+                    <th class="aaa-date">Termine le</th>
                     <th style="width: 8%" class="aaa-icon">Visibilité</th>
                     <th class="aaa-action"></th>
                     <th class="aaa-action"></th>
@@ -40,10 +40,10 @@
                         <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="ellipsis" title="{{ evenement.slug }}">{{ evenement.slug }}</td>
                         <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="ellipsis" title="{{ evenement.label }}">{{ evenement.label }}</td>
                         <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';">{{ evenement.createur.pseudo }}</td>
-                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-date">{% if evenement.dateCreation %}{{ evenement.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y') }}<br />{{ evenement.dateCreation|date('H:i') }}{% endif %}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-date">{% if evenement.dateCreation %}{{ evenement.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}<br />{{ evenement.dateCreation|date('H:i') }}{% endif %}</td>
                         <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="ellipsis" title="{{ evenement.description }}">{{ evenement.description }}</td>
-                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-date">{% if evenement.dateDebut %}{{ evenement.dateDebut|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y') }}<br />{{ evenement.dateDebut|date('H:i') }}{% endif %}</td>
-                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-date">{% if evenement.dateFin %}{{ evenement.dateFin|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL Y') }}<br />{{ evenement.dateFin|date('H:i') }}{% endif %}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-date">{% if evenement.dateDebut %}{{ evenement.dateDebut|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}<br />{{ evenement.dateDebut|date('H:i') }}{% endif %}</td>
+                        <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-date">{% if evenement.dateFin %}{{ evenement.dateFin|localizeddate('none', 'none', 'fr_FR', null, 'd LLL Y') }}<br />{{ evenement.dateFin|date('H:i') }}{% endif %}</td>
                         <td onclick="window.document.location = '{{ path('evenement_detail', { 'slug': evenement.slug }) }}';" class="aaa-icon">
                             {% if evenement.estPublic %}
                                 <span class="glyphicon glyphicon-user" title="Publique"></span>

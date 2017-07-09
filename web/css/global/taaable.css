@@ -48,6 +48,7 @@
 .table.aaa-table > thead > tr > td.aaa-date,
 .table.aaa-table > thead > tr > th.aaa-date {
     text-align: center;
+    width: 105px;
 }
 
 .table.aaa-table > tbody > tr > td.aaa-icon,

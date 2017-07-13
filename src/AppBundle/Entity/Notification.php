@@ -22,7 +22,7 @@ class Notification
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @Gedmo\Slug(fields={"titre"}, updatable=false)
      * @ORM\Column(name="slug", type="string", length=250, unique=true)
@@ -56,21 +56,14 @@ class Notification
      * @ORM\Column(name="date_creation", type="datetime")
      */
     private $dateCreation;
-    
+
     /**
-     * @var Utilisateur 
-     *   
+     * @var Utilisateur
+     *
      * @ORM\ManyToOne(targetEntity="Utilisateur")
      * @ORM\JoinColumn(name="createur_id", referencedColumnName="id")
      */
     private $createur;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="est_public", type="boolean")
-     */
-    private $estPublic;
 
     /**
      * Get id
@@ -81,12 +74,12 @@ class Notification
     {
         return $this->id;
     }
-    
+
     /**
      * Get slug
      *
      * @return string
-     */    
+     */
     public function getSlug()
     {
         return $this->slug;
@@ -98,11 +91,11 @@ class Notification
      * @param string $slug
      *
      * @return Notification
-     */  
+     */
     public function setSlug($slug)
     {
         $this->slug = $slug;
-        
+
         return $this;
     }
 
@@ -201,7 +194,7 @@ class Notification
     {
         return $this->dateCreation;
     }
-    
+
     /**
      * Set createur
      *
@@ -224,29 +217,5 @@ class Notification
     public function getCreateur()
     {
         return $this->createur;
-    }
-    
-    /**
-     * Get estPublic
-     *
-     * @return boolean
-     */
-    public function getEstPublic()
-    {
-        return $this->estPublic;
-    }
-
-    /**
-     * Set estPublic
-     *
-     * @param boolean $estPublic
-     *
-     * @return Notification
-     */
-    public function setEstPublic($estPublic)
-    {
-        $this->estPublic = $estPublic;
-        
-        return $this;
     }
 }

@@ -30,12 +30,6 @@
             <dt>Description</dt>
             <dd>{{ notification.description }}</dd>
         </dl>
-
-        <dl class="dl-horizontal">
-            <dt>Visibilité</dt>
-            <dd>{% if notification.estPublic %}Publique{% else %}Privée{% endif %}</dd>
-        </dl>
-
         <div class="col-md-6">
             <button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ notification.slug }}"><span class="glyphicon glyphicon-trash"></span> Supprimer la notification</button>
         </div>

@@ -36,7 +36,7 @@
                     <tr class="aaa-row-clickable">
                         <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';">{{ notification.id }}</td>
                         <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';" class="aaa-icon">
-                            <span class="{{ notification.icone }}" title="{{ notification.icone }}"></span>
+                            <span class="glyphicon {{ notification.icone }}" title="{{ notification.icone }}"></span>
                         </td>
                         <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';" class="ellipsis" title="{{ notification.slug }}">{{ notification.slug }}</td>
                         <td onclick="window.document.location = '{{ path('notification_detail', { 'slug': notification.slug }) }}';" class="ellipsis" title="{{ notification.titre }}">{{ notification.titre }}</td>

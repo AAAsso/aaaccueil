@@ -3,8 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Utilisateur;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use AppBundle\Entity\Utilisateur;
+
 
 /**
  * Notification
@@ -14,6 +16,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Notification
 {
+    public function __construct()
+    {
+        $this->utilisateursConcernes = new ArrayCollection();
+    }
+    
     /**
      * @var int
      *
@@ -64,6 +71,13 @@ class Notification
      * @ORM\JoinColumn(name="createur_id", referencedColumnName="id")
      */
     private $createur;
+    
+    /**
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity="Utilisateur", mappedBy="notificationsNonLues")
+     */
+    private $utilisateursConcernes;
 
     /**
      * Get id
@@ -217,5 +231,53 @@ class Notification
     public function getCreateur()
     {
         return $this->createur;
+    }
+    
+    /**
+     * Set utilisateursConcernes
+     *
+     * @param Utilisateur $utilisateursConcernes
+     *
+     * @return Notification
+     */
+    public function setUtilisateursConcernes($utilisateursConcernes)
+    {
+        $this->utilisateursConcernes = $utilisateursConcernes;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateursConcernes
+     *
+     * @return Utilisateur
+     */
+    public function getUtilisateursConcernes()
+    {
+        return $this->utilisateursConcernes;
+    }
+    
+    /**
+     * Add utilisateursConcernes
+     *
+     * @param \AppBundle\Entity\Notification $utilisateursConcernes
+     *
+     * @return Utilisateur
+     */
+    public function addUtilisateursConcernes(\AppBundle\Entity\Utilisateur $utilisateursConcernes)
+    {
+        $this->utilisateursConcernes[] = $utilisateursConcernes;
+
+        return $this;
+    }
+
+    /**
+     * Remove utilisateursConcernes
+     *
+     * @param \AppBundle\Entity\Notification $utilisateursConcernes
+     */
+    public function removeUtilisateursConcernes(\AppBundle\Entity\Utilisateur $utilisateursConcernes)
+    {
+        $this->utilisateursConcernes->removeElement($utilisateursConcernes);
     }
 }

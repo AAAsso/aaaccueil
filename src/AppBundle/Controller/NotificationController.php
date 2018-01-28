@@ -43,9 +43,39 @@ class NotificationController extends Controller
 
     public function navbarAction()
     {
+        // Initialisation des objets utiles
         $em = $this->getDoctrine()->getManager();
+        $session = new Session();
+        $notifications = array();
 
-        $notifications = $em->getRepository('AppBundle:Notification')->findAll();
+        // On récupère les dix dernières notifications (qu'elles soient lues ou pas)
+        $dernieresNotifications = $em->getRepository('AppBundle:Notification')->findLatest();
+        
+        // On récupère les notifications qui n'ont pas été lues pas l'utilisateur
+        $notificationsNonLues = $session->get('notificationsNonLues');
+        
+        foreach($dernieresNotifications as $notification)
+        {
+            $notificationEstLue = true;
+            
+            foreach($notificationsNonLues as $notificationNonLue)
+            {
+                if($notification->getId() === $notificationNonLue->getId())
+                {
+                    $notificationEstLue = false;
+                    break;
+                }
+            }
+            
+            if($notificationEstLue)
+            {
+                $notifications[] = array('notification' => $notification, 'lue' => true);
+            }
+            else
+            {
+                $notifications[] = array('notification' => $notification, 'lue' => false);
+            }
+        }
 
         return $this->render('notification/navbar.html.twig', array(
             'notifications' => $notifications,

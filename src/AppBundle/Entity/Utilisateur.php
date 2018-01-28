@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Notification;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Utilisateur
@@ -13,10 +14,9 @@ use AppBundle\Entity\Notification;
  */
 class Utilisateur implements \Serializable
 {
-
     public function __construct()
     {
-        $this->notificationsLues = new ArrayCollection();
+        $this->notificationsNonLues = new ArrayCollection();
     }
 
     /**
@@ -59,13 +59,13 @@ class Utilisateur implements \Serializable
     /**
      * @var array
      *
-     * @ORM\ManyToMany(targetEntity="Notification")
-     * @ORM\JoinTable(name="utilisateur_lire_notification",
-     *      joinColumns={@ORM\JoinColumn(name="utilsateur_id", referencedColumnName="id")},
+     * @ORM\ManyToMany(targetEntity="Notification", inversedBy="utilisateursConcernes", fetch="EAGER")
+     * @ORM\JoinTable(name="utilisateur_notification_non_lue",
+     *      joinColumns={@ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="notification_id", referencedColumnName="id")}
      *      )
      */
-    private $notificationsLues;
+    private $notificationsNonLues;
 
     /**
      * Get id
@@ -174,64 +174,51 @@ class Utilisateur implements \Serializable
     }
 
     /**
-     * Set notificationsLues
+     * Set notificationsNonLues
      *
-     * @param array $notificationsLues
+     * @param array $notificationsNonLues
      *
      * @return Utilisateur
      */
-    public function setNotificationsLues($notificationsLues)
+    public function setNotificationsNonLues($notificationsNonLues)
     {
-        $this->notificationsLues = $notificationsLues;
+        $this->notificationsNonLues = $notificationsNonLues;
 
         return $this;
     }
 
     /**
-     * Get notificationsLues
+     * Get notificationsNonLues
      *
      * @return array
      */
-    public function getNotificationsLues()
+    public function getNotificationsNonLues()
     {
-        return $this->notificationsLues;
+        return $this->notificationsNonLues;
     }
 
-
     /**
-     * Add notificationLue
+     * Add notificationsNonLue
+     *
+     * @param \AppBundle\Entity\Notification $notificationsNonLues
      *
      * @return Utilisateur
      */
-    public function addNotificationsLues($notificationLue)
+    public function addNotificationsNonLues(\AppBundle\Entity\Notification $notificationsNonLues)
     {
-        $this->notificationsLues[] = $notificationLue;
+        $this->notificationsNonLues[] = $notificationsNonLues;
 
         return $this;
     }
 
     /**
-     * Add notificationsLue
+     * Remove notificationsNonLue
      *
-     * @param \AppBundle\Entity\Notification $notificationsLue
-     *
-     * @return Utilisateur
+     * @param \AppBundle\Entity\Notification $notificationsNonLues
      */
-    public function addNotificationsLue(\AppBundle\Entity\Notification $notificationsLue)
+    public function removeNotificationsNonLues(\AppBundle\Entity\Notification $notificationsNonLues)
     {
-        $this->notificationsLues[] = $notificationsLue;
-
-        return $this;
-    }
-
-    /**
-     * Remove notificationsLue
-     *
-     * @param \AppBundle\Entity\Notification $notificationsLue
-     */
-    public function removeNotificationsLue(\AppBundle\Entity\Notification $notificationsLue)
-    {
-        $this->notificationsLues->removeElement($notificationsLue);
+        $this->notificationsNonLues->removeElement($notificationsNonLues);
     }
 
     public function serialize()

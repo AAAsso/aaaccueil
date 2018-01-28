@@ -39,3 +39,8 @@ body { padding-top: 70px; padding-bottom: 70px; }
     font-size: 12px;
     font-style: italic;
 }
+
+.aaaccueil-notification-lue {
+    color: #a3a3a3;
+    background-color: #f0f0f0;
+}

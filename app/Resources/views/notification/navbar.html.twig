@@ -1,5 +1,6 @@
-{% for notification in notifications %}
-    <li class="text-center aaaccueil-navigation-notification">
+{% for notificationData in notifications %}   
+    {% set notification = notificationData.notification %}    
+    <li class="text-center aaaccueil-navigation-notification {% if notificationData.lue %}aaaccueil-notification-lue{% endif %}">
         <div class="aaaccueil-notification-titre">
             <span class="glyphicon {{ notification.icone }}"></span>
             <strong>{{ notification.titre }}</strong>
@@ -8,7 +9,6 @@
             {{ notification.description }}
         </div>
     </li>
-    <li role="separator" class="divider"></li>
-    {% endfor %}
+{% endfor %}
 
 <!-- TODO : Afficher le symbole -check ou unchecked en fonction de si l'utilisateur a cliqué sur la notif" -->

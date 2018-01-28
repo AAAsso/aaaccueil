@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class NotificationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLatest()
+    {
+        return $this->getEntityManager()
+                ->createQuery(
+                    'SELECT n FROM AppBundle:Notification n '
+                    . 'ORDER BY n.dateCreation ASC'
+                )
+                ->setMaxResults(10)->getResult();
+    }
 }

@@ -15,7 +15,7 @@ class NotificationRepository extends \Doctrine\ORM\EntityRepository
         return $this->getEntityManager()
                 ->createQuery(
                     'SELECT n FROM AppBundle:Notification n '
-                    . 'ORDER BY n.dateCreation ASC'
+                    . 'ORDER BY n.dateCreation DESC'
                 )
                 ->setMaxResults(10)->getResult();
     }

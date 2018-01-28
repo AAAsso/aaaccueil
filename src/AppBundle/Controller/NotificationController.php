@@ -46,7 +46,8 @@ class NotificationController extends Controller
         // Initialisation des objets utiles
         $em = $this->getDoctrine()->getManager();
         $session = new Session();
-        $notifications = array();
+        $notificationsLuesFormatees = array();
+        $notificationsNonLuesFormatees = array();
 
         // On récupère les dix dernières notifications (qu'elles soient lues ou pas)
         $dernieresNotifications = $em->getRepository('AppBundle:Notification')->findLatest();
@@ -69,13 +70,15 @@ class NotificationController extends Controller
             
             if($notificationEstLue)
             {
-                $notifications[] = array('notification' => $notification, 'lue' => true);
+                $notificationsLuesFormatees[] = array('notification' => $notification, 'lue' => true);
             }
             else
             {
-                $notifications[] = array('notification' => $notification, 'lue' => false);
+                $notificationsNonLuesFormatees[] = array('notification' => $notification, 'lue' => false);
             }
         }
+        
+        $notifications = array_merge($notificationsNonLuesFormatees, $notificationsLuesFormatees);
 
         return $this->render('notification/navbar.html.twig', array(
             'notifications' => $notifications,
@@ -105,6 +108,14 @@ class NotificationController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            // On récupère la liste des utilisateurs pour pouvoir leur associer la notification.
+            $utilisateurs = $em->getRepository('AppBundle:Utilisateur')->findAll();
+            // Pour chaque utilisateur on associe la notification et on le persist.
+            foreach($utilisateurs as $utilisateur)
+            {
+                $utilisateur->addNotificationsNonLues($notification);
+                $em->persist($utilisateur);
+            }
             $em->persist($notification);
             $em->flush();
 

@@ -15,13 +15,30 @@
 
     <div class="col-md-12">
         {{ form_start(form, {'attr': {'id': 'form_creer_notification'}}) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-    </div>
-
+        {{ form_widget(form) }}  
+        <div class="form-group">
+            <label for="icon-picker">Îcone</label>
+            <button id="icon-picker" class="btn btn-default" role="iconpicker" 
+                data-iconset="glyphicon" data-icon="glyphicon-tag" 
+                data-search="true" data-search-text="Rechercher..." 
+                data-footer="false" data-rows="3" data-cols= "5">                    
+            </button>  
+        </div>
+        {{ form_end(form) }}   
+    </div>    
     <div class="col-md-6"></div>
     <div class="col-md-6 text-right">
         <a href="{{ path('notification_liste') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Annuler</a>
         <button class="btn btn-primary" form="form_creer_notification"><span class="glyphicon glyphicon-ok"></span> Créer la notification</button>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        // Initialisation de l'iconpicker
+        $('#icon-picker').iconpicker();
+        // Lorsque l'icone change on enregistre la valeur dans le champ caché "icone".
+        $('#icon-picker').on('change', function(e){
+            $('#appbundle_notification_icone').val(e.icon);
+        });
+    </script>
 {% endblock %}

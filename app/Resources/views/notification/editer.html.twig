@@ -16,6 +16,14 @@
     <div class="col-md-12">
         {{ form_start(form_editer, {'attr': {'id': 'form_editer_notification'}}) }}
         {{ form_widget(form_editer) }}
+        <div class="form-group">
+            <label for="icon-picker">Îcone</label>
+            <button id="icon-picker" class="btn btn-default" role="iconpicker" 
+                data-iconset="glyphicon" data-icon="glyphicon-tag" 
+                data-search="true" data-search-text="Rechercher..." 
+                data-footer="false" data-rows="3" data-cols= "5">                    
+            </button>  
+        </div>
         {{ form_end(form_editer) }}
     </div>
 
@@ -54,4 +62,14 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        // Initialisation de l'iconpicker
+        $('#icon-picker').iconpicker();
+        // Lorsque l'icone change on enregistre la valeur dans le champ caché "icone".
+        $('#icon-picker').on('change', function(e){
+            $('#appbundle_notification_icone').val(e.icon);
+        });
+    </script>
 {% endblock %}

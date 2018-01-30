@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -51,14 +52,14 @@ class NotificationController extends Controller
 
         // On récupère les dix dernières notifications (qu'elles soient lues ou pas)
         $dernieresNotifications = $em->getRepository('AppBundle:Notification')->findLatest();
-        
+
         // On récupère les notifications qui n'ont pas été lues pas l'utilisateur
         $notificationsNonLues = $session->get('notificationsNonLues');
-        
+
         foreach($dernieresNotifications as $notification)
         {
             $notificationEstLue = true;
-            
+
             foreach($notificationsNonLues as $notificationNonLue)
             {
                 if($notification->getId() === $notificationNonLue->getId())
@@ -67,7 +68,7 @@ class NotificationController extends Controller
                     break;
                 }
             }
-            
+
             if($notificationEstLue)
             {
                 $notificationsLuesFormatees[] = array('notification' => $notification, 'lue' => true);
@@ -77,12 +78,35 @@ class NotificationController extends Controller
                 $notificationsNonLuesFormatees[] = array('notification' => $notification, 'lue' => false);
             }
         }
-        
+
         $notifications = array_merge($notificationsNonLuesFormatees, $notificationsLuesFormatees);
 
         return $this->render('notification/navbar.html.twig', array(
             'notifications' => $notifications,
         ));
+    }
+
+    /**
+     * Lists all notification entities.
+     *
+     * @Route("/ajax", name="notification_ajax")
+     * @Method("GET")
+     */
+    public function ajaxAction()
+    {
+        $session = new Session();
+        $em = $this->getDoctrine()->getManager();
+
+        // On récupère les notifications qui n'ont pas été lues pas l'utilisateur
+        $utilisateurConnecte = $em->getRepository('AppBundle:Utilisateur')->find($session->get('utilisateur')->getId());
+        $notificationsNonLues = $utilisateurConnecte->getNotificationsNonLues();
+        $session->set('notificationsNonLues', $notificationsNonLues);
+
+        $json = json_encode('OK');
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
     /**

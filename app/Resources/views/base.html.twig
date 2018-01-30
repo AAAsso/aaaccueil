@@ -23,11 +23,11 @@
         <!-- ------------------------------- -->
         <!-- ------ depends on jQuery ------ -->
         <!-- ---- depends on Bootstrap ----- -->
-        <!-- ------------------------------- -->        
+        <!-- ------------------------------- -->
         <link rel="stylesheet" href="{{ asset('libraries/iconpicker/dist/css/bootstrap-iconpicker.min.css') }}"/>
         <script type="text/javascript" src="{{ asset('libraries/iconpicker/dist/js/bootstrap-iconpicker-iconset-all.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('libraries/iconpicker/dist/js/bootstrap-iconpicker.min.js') }}"></script>
-        
+
         <!-- ------------------------------- -->
         <!-- --------- Underscore ---------- -->
         <!-- ------------------------------- -->
@@ -195,6 +195,26 @@
     {% block body %}{% endblock %}
 </div>
 {% block javascripts %}{% endblock %}
+<script type="text/javascript">
+        setInterval(refreshNotification, 5000);
+
+        function refreshNotification(){
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '{{ path('notification_ajax') }}'
+            })
+            .done(function(response){
+                console.log('refresh notification ok !');
+                // template = response;
+                // $('#your_div').html(template.html); //Change the html of the div with the id = "your_div"
+            })
+            .fail(function(jqXHR, textStatus, errorThrown){
+                // console.log('Error : ' + errorThrown);
+                console.log('fail');
+            });
+        };
+</script>
 </body>
 <!-- Navbar pied de page -->
 <footer>

@@ -1,6 +1,7 @@
-{% for notificationData in notifications %}   
-    {% set notification = notificationData.notification %}    
-    <li title="{{ notification.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL yyyy') }}" class="text-center aaaccueil-navigation-notification {% if notificationData.lue %}aaaccueil-notification-lue{% endif %}">
+{% for notificationData in notifications %}
+    {% set notification = notificationData.notification %}
+    <li title="{{ notification.dateCreation|localizeddate('none', 'none', 'fr_FR', null, 'd LLLL yyyy') }}"
+        class="text-center aaaccueil-navigation-notification {% if notificationData.lue %}aaaccueil-notification-lue{% endif %}">
         <div class="aaaccueil-notification-titre">
             <span class="glyphicon {{ notification.icone }}"></span>
             <strong>{{ notification.titre }}</strong>

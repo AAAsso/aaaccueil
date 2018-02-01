@@ -41,8 +41,8 @@ class NotificationController extends Controller
             'forms_supprimer' => $deleteForms,
         ]);
     }
-
-    public function navbarAction()
+    
+    private function refreshNotifications()
     {
         // Initialisation des objets utiles
         $em = $this->getDoctrine()->getManager();
@@ -54,7 +54,10 @@ class NotificationController extends Controller
         $dernieresNotifications = $em->getRepository('AppBundle:Notification')->findLatest();
 
         // On récupère les notifications qui n'ont pas été lues pas l'utilisateur
-        $notificationsNonLues = $session->get('notificationsNonLues');
+        $idUtilisateurConnecte = $session->get('utilisateur')->getId();
+        $utilisateurConnecte = $em->getRepository('AppBundle:Utilisateur')->find($idUtilisateurConnecte);
+        $notificationsNonLues = $utilisateurConnecte->getNotificationsNonLues();
+        $session->set('nbNotificationsNonLues', count($notificationsNonLues));
 
         foreach($dernieresNotifications as $notification)
         {
@@ -77,9 +80,14 @@ class NotificationController extends Controller
             {
                 $notificationsNonLuesFormatees[] = array('notification' => $notification, 'lue' => false);
             }
-        }
+        } 
 
-        $notifications = array_merge($notificationsNonLuesFormatees, $notificationsLuesFormatees);
+        return array_merge($notificationsNonLuesFormatees, $notificationsLuesFormatees);
+    }
+
+    public function navbarAction()
+    {
+        $notifications = $this->refreshNotifications();
 
         return $this->render('notification/navbar.html.twig', array(
             'notifications' => $notifications,
@@ -87,7 +95,7 @@ class NotificationController extends Controller
     }
 
     /**
-     * Lists all notification entities.
+     * Retourne les données à jour pour la liste des notifications.
      *
      * @Route("/ajax", name="notification_ajax")
      * @Method("GET")
@@ -95,14 +103,19 @@ class NotificationController extends Controller
     public function ajaxAction()
     {
         $session = new Session();
-        $em = $this->getDoctrine()->getManager();
-
-        // On récupère les notifications qui n'ont pas été lues pas l'utilisateur
-        $utilisateurConnecte = $em->getRepository('AppBundle:Utilisateur')->find($session->get('utilisateur')->getId());
-        $notificationsNonLues = $utilisateurConnecte->getNotificationsNonLues();
-        $session->set('notificationsNonLues', $notificationsNonLues);
-
-        $json = json_encode('OK');
+        
+        $notifications = $this->refreshNotifications();
+        $nbNotificationsNonLues = $session->get('nbNotificationsNonLues');
+        
+        $listeNotifications = $this->forward('notification/navbar.html.twig', array(
+            'notifications' => $notifications,
+        ))->getContent();
+                
+        $json = json_encode(array(
+            'listeNotifications' => $listeNotifications,
+            'nbNotificationsNonLues' => $nbNotificationsNonLues
+        ), true);
+        
         $response = new Response($json, 200);
         $response->headers->set('Content-Type', 'application/json');
 

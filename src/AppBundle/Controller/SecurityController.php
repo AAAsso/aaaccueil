@@ -36,7 +36,7 @@ class SecurityController extends Controller
 
                 $session->set('estConnecte', true);
                 $session->set('utilisateur', $utilisateur);
-                $session->set('notificationsNonLues', $utilisateur->getNotificationsNonLues());
+                $session->set('nbNotificationsNonLues', count($utilisateur->getNotificationsNonLues()));
             }
             else
             {

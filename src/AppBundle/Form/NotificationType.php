@@ -18,8 +18,7 @@ class NotificationType extends AbstractType
     {
         $builder
             ->add('titre', TextType::class, array('label' => 'Titre'))
-            ->add('description', TextareaType::class, array('label' => 'Description'))
-            ->add('icone', HiddenType::class);
+            ->add('description', TextareaType::class, array('label' => 'Description'));
     }
 
     /**

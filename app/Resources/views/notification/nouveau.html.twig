@@ -36,6 +36,8 @@
     <script type="text/javascript">
         // Initialisation de l'iconpicker
         $('#icon-picker').iconpicker();
+        // On met la valeur par défaut de l'iconpicker dans le champ caché.
+        $('#appbundle_notification_icone').val(e.icon);
         // Lorsque l'icone change on enregistre la valeur dans le champ caché "icone".
         $('#icon-picker').on('change', function(e){
             $('#appbundle_notification_icone').val(e.icon);

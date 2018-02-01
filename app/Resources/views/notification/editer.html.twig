@@ -67,6 +67,8 @@
     <script type="text/javascript">
         // Initialisation de l'iconpicker
         $('#icon-picker').iconpicker();
+        // On sélectionne l'icone qui est déjà associé à la notification.
+        $('#icon-picker').iconpicker('setIcon', $('#appbundle_notification_icone').val());
         // Lorsque l'icone change on enregistre la valeur dans le champ caché "icone".
         $('#icon-picker').on('change', function(e){
             $('#appbundle_notification_icone').val(e.icon);

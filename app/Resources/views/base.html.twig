@@ -208,7 +208,7 @@
                 console.log('refresh notification ok !');
                 var listeNotifications = response.listeNotifications;
                 var nbNotificationsNonLues = response.nbNotificationsNonLues;
-                $('#aaaccueil-navigation-notifications-liste').html(listeNotifications.html);
+                $('#aaaccueil-navigation-notifications-liste').html(listeNotifications);
                 if(nbNotificationsNonLues > 0)
                 {                    
                     $('#aaaccueil-navigation-notifications-nombre').html(nbNotificationsNonLues);

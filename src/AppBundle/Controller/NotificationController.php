@@ -107,7 +107,7 @@ class NotificationController extends Controller
         $notifications = $this->refreshNotifications();
         $nbNotificationsNonLues = $session->get('nbNotificationsNonLues');
         
-        $listeNotifications = $this->forward('notification/navbar.html.twig', array(
+        $listeNotifications = $this->forward('AppBundle:Notification:navbar', array(
             'notifications' => $notifications,
         ))->getContent();
                 
